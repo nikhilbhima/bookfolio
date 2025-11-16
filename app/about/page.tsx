@@ -14,17 +14,17 @@ export default function AboutPage() {
         <div className="container mx-auto max-w-3xl">
           <h1 className="text-4xl font-bold mb-6">About Bookfolio</h1>
           <div className="prose prose-slate dark:prose-invert max-w-none space-y-6 text-muted-foreground">
-            <p className="text-lg">Bookfolio is your personal digital bookshelf—a beautiful way to track, organize, and share your reading journey with the world.</p>
-            <h2 className="text-2xl font-semibold text-foreground mt-8 mb-4">Our Mission</h2>
-            <p>We believe that every reader&apos;s journey is unique and worth sharing. Bookfolio empowers you to:</p>
+            <p className="text-lg">Bookfolio is a personal digital bookshelf—a beautiful way to track, organize, and share reading journeys with the world.</p>
+            <h2 className="text-2xl font-semibold text-foreground mt-8 mb-4">Mission</h2>
+            <p>Every reader&apos;s journey is unique and worth sharing. Bookfolio empowers readers to:</p>
             <ul className="list-disc pl-6 space-y-2">
-              <li>Track books you&apos;ve read, are reading, or want to read</li>
-              <li>Rate and review your favorite (or not-so-favorite) books</li>
-              <li>Organize your collection by genre, status, or custom preferences</li>
-              <li>Share your reading journey with a personalized public profile</li>
+              <li>Track books read, currently reading, or want to read</li>
+              <li>Rate and review favorite (or not-so-favorite) books</li>
+              <li>Organize collections by genre, status, or custom preferences</li>
+              <li>Share reading journeys with personalized public profiles</li>
             </ul>
             <h2 className="text-2xl font-semibold text-foreground mt-8 mb-4">Why Bookfolio?</h2>
-            <p>Built for readers, by readers. We&apos;ve created a clean, intuitive platform that focuses on what matters most—your books and your reading experience.</p>
+            <p>Built for readers, by readers. A clean, intuitive platform that focuses on what matters most—books and reading experiences.</p>
             <h2 className="text-2xl font-semibold text-foreground mt-8 mb-4">Get Started</h2>
             <p>Ready to create your digital bookshelf? <Link href="/signup" className="text-primary hover:underline font-medium">Sign up now</Link> and start building your Bookfolio today.</p>
           </div>

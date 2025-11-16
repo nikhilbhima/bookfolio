@@ -132,7 +132,7 @@ export default function LandingPage() {
           </div>
 
           {/* Interactive Preview Dashboard */}
-          <div className="max-w-7xl mx-auto px-0 md:px-8 lg:px-16">
+          <div className="max-w-5xl mx-auto px-0 md:px-8 lg:px-16 scale-[0.82] sm:scale-90 md:scale-95 lg:scale-100 origin-top">
             <PreviewDashboard />
           </div>
         </div>

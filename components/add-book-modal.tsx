@@ -471,11 +471,22 @@ export function AddBookModal({ isOpen, onClose, bookToEdit }: AddBookModalProps)
 
                   <div>
                     <Label className="text-sm sm:text-base">Your Rating</Label>
-                    <div className="mt-1.5">
+                    <div className="mt-1.5 flex items-center gap-3">
                       <StarRating
                         rating={formData.rating}
                         onRatingChange={(rating) => setFormData({ ...formData, rating })}
                       />
+                      {formData.rating > 0 && (
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setFormData({ ...formData, rating: 0 })}
+                          className="text-xs text-muted-foreground hover:text-foreground"
+                        >
+                          Clear
+                        </Button>
+                      )}
                     </div>
                   </div>
                 </div>

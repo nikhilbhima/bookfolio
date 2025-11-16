@@ -24,55 +24,48 @@ export default function PrivacyPage() {
 
           <div className="space-y-6 text-muted-foreground">
             <section>
-              <h2 className="text-2xl font-semibold text-foreground mb-3">Information We Collect</h2>
+              <h2 className="text-2xl font-semibold text-foreground mb-3">Information Collected</h2>
               <p>
-                When you create an account on Bookfolio, we collect information you provide such as
-                your email address, username, and any profile information you choose to add. We also
-                collect information about the books you add to your collection and your reading preferences.
+                When creating an account on Bookfolio, information provided includes email address, username, and any profile information chosen to add. Information about books added to collections and reading preferences is also collected.
               </p>
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-foreground mb-3">How We Use Your Information</h2>
-              <p className="mb-2">We use the information we collect to:</p>
+              <h2 className="text-2xl font-semibold text-foreground mb-3">How Information is Used</h2>
+              <p className="mb-2">Collected information is used to:</p>
               <ul className="list-disc pl-6 space-y-1">
-                <li>Provide and maintain your Bookfolio account</li>
-                <li>Display your book collection on your public profile</li>
-                <li>Send you important updates about our service</li>
-                <li>Improve our platform and develop new features</li>
+                <li>Provide and maintain Bookfolio accounts</li>
+                <li>Display book collections on public profiles</li>
+                <li>Send important updates about the service</li>
+                <li>Improve the platform and develop new features</li>
               </ul>
             </section>
 
             <section>
               <h2 className="text-2xl font-semibold text-foreground mb-3">Data Sharing</h2>
               <p>
-                We do not sell your personal information. Your profile information and book collection
-                are only visible to others if you choose to make your profile public. We use Supabase
-                for data storage and Google for authentication, both of which have their own privacy policies.
+                Personal information is not sold. Profile information and book collections are only visible to others if profiles are set to public. Supabase is used for data storage and Google for authentication, both of which have their own privacy policies.
               </p>
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-foreground mb-3">Your Rights</h2>
+              <h2 className="text-2xl font-semibold text-foreground mb-3">User Rights</h2>
               <p>
-                You have the right to access, update, or delete your personal information at any time
-                through your account settings. You can also request a copy of your data or permanently
-                delete your account.
+                Users have the right to access, update, or delete personal information at any time through account settings. Data copies can be requested or accounts can be permanently deleted.
               </p>
             </section>
 
             <section>
               <h2 className="text-2xl font-semibold text-foreground mb-3">Cookies</h2>
               <p>
-                We use essential cookies to maintain your session and provide authentication. These
-                cookies are necessary for the service to function properly.
+                Essential cookies are used to maintain sessions and provide authentication. These cookies are necessary for the service to function properly.
               </p>
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-foreground mb-3">Contact Us</h2>
+              <h2 className="text-2xl font-semibold text-foreground mb-3">Contact</h2>
               <p>
-                If you have any questions about this Privacy Policy, please contact us on{" "}
+                Questions about this Privacy Policy can be directed to{" "}
                 <a
                   href="https://x.com/nikhilbhima"
                   target="_blank"
@@ -86,7 +79,7 @@ export default function PrivacyPage() {
 
             <section>
               <p className="text-sm">
-                <strong>Last updated:</strong> October 2025
+                <strong>Last updated:</strong> November 2025
               </p>
             </section>
           </div>

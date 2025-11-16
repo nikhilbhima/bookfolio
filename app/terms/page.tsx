@@ -26,30 +26,29 @@ export default function TermsPage() {
             <section>
               <h2 className="text-2xl font-semibold text-foreground mb-3">Acceptance of Terms</h2>
               <p>
-                By accessing and using Bookfolio, you agree to be bound by these Terms of Use. If you
-                do not agree with any part of these terms, please do not use our service.
+                By accessing and using Bookfolio, users agree to be bound by these Terms of Use. If there is disagreement with any part of these terms, the service should not be used.
               </p>
             </section>
 
             <section>
               <h2 className="text-2xl font-semibold text-foreground mb-3">User Accounts</h2>
-              <p className="mb-2">When you create an account, you agree to:</p>
+              <p className="mb-2">When creating an account, users agree to:</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Provide accurate and complete information</li>
-                <li>Maintain the security of your account credentials</li>
-                <li>Not share your account with others</li>
-                <li>Notify us immediately of any unauthorized access</li>
+                <li>Maintain the security of account credentials</li>
+                <li>Not share accounts with others</li>
+                <li>Report any unauthorized access immediately</li>
               </ul>
             </section>
 
             <section>
               <h2 className="text-2xl font-semibold text-foreground mb-3">Acceptable Use</h2>
-              <p className="mb-2">You agree not to:</p>
+              <p className="mb-2">Users agree not to:</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Use the service for any illegal or unauthorized purpose</li>
-                <li>Upload malicious code or attempt to compromise our systems</li>
+                <li>Upload malicious code or attempt to compromise systems</li>
                 <li>Harass, abuse, or harm other users</li>
-                <li>Impersonate others or misrepresent your affiliation</li>
+                <li>Impersonate others or misrepresent affiliations</li>
                 <li>Scrape or copy content without permission</li>
               </ul>
             </section>
@@ -57,49 +56,42 @@ export default function TermsPage() {
             <section>
               <h2 className="text-2xl font-semibold text-foreground mb-3">Content Ownership</h2>
               <p>
-                You retain ownership of the content you post on Bookfolio, including your book reviews
-                and notes. By making your profile public, you grant us permission to display this
-                content on our platform.
+                Users retain ownership of content posted on Bookfolio, including book reviews and notes. By making profiles public, permission is granted to display this content on the platform.
               </p>
             </section>
 
             <section>
               <h2 className="text-2xl font-semibold text-foreground mb-3">Service Availability</h2>
               <p>
-                We strive to keep Bookfolio available at all times, but we do not guarantee
-                uninterrupted access. We may modify, suspend, or discontinue any part of the service
-                at any time.
+                Efforts are made to keep Bookfolio available at all times, but uninterrupted access is not guaranteed. The service may be modified, suspended, or discontinued at any time.
               </p>
             </section>
 
             <section>
               <h2 className="text-2xl font-semibold text-foreground mb-3">Termination</h2>
               <p>
-                We reserve the right to suspend or terminate your account if you violate these terms
-                or engage in behavior that harms our service or other users.
+                Accounts may be suspended or terminated if these terms are violated or if behavior harms the service or other users.
               </p>
             </section>
 
             <section>
               <h2 className="text-2xl font-semibold text-foreground mb-3">Limitation of Liability</h2>
               <p>
-                Bookfolio is provided as-is without warranties of any kind. We are not liable for any
-                damages arising from your use of the service.
+                Bookfolio is provided as-is without warranties of any kind. No liability is accepted for any damages arising from use of the service.
               </p>
             </section>
 
             <section>
               <h2 className="text-2xl font-semibold text-foreground mb-3">Changes to Terms</h2>
               <p>
-                We may update these terms from time to time. We will notify users of significant
-                changes through email or a notice on our website.
+                These terms may be updated from time to time. Users will be notified of significant changes through email or a notice on the website.
               </p>
             </section>
 
             <section>
               <h2 className="text-2xl font-semibold text-foreground mb-3">Contact</h2>
               <p>
-                Questions about these terms? Reach out to us on{" "}
+                Questions about these terms can be directed to{" "}
                 <a
                   href="https://x.com/nikhilbhima"
                   target="_blank"
@@ -113,7 +105,7 @@ export default function TermsPage() {
 
             <section>
               <p className="text-sm">
-                <strong>Last updated:</strong> October 2025
+                <strong>Last updated:</strong> November 2025
               </p>
             </section>
           </div>
