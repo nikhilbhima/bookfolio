@@ -248,7 +248,7 @@ export function BooksGrid() {
   return (
     <div className="space-y-3 sm:space-y-4">
       {/* View Switcher */}
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-2">
           {!isDragEnabled && view === "grid" && (
             <p className="text-xs text-muted-foreground">
