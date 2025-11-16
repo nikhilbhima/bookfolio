@@ -161,7 +161,7 @@ export function PublicProfileView({ profile, books }: PublicProfileViewProps) {
               <p className="text-muted-foreground">No books found matching your filters</p>
             </div>
           ) : (
-            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8 gap-3 sm:gap-4 max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8 gap-3 sm:gap-4 max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8">
               {filteredBooks.map((book) => (
                 <BookCard key={book.id} book={book} view="grid" isPublic />
               ))}
