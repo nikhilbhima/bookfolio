@@ -304,8 +304,8 @@ export function BooksGrid() {
             ref={gridRef}
             className={
               view === "grid"
-                ? "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4 relative"
-                : "space-y-2"
+                ? "grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8 gap-3 sm:gap-4 relative max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8"
+                : "space-y-2 max-w-4xl mx-auto"
             }
           >
             {currentBooks.map((book, index) => (

@@ -25,7 +25,7 @@ export function FiltersBar() {
 
   return (
     <>
-      <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+      <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Status Filter Dropdown */}
         <Select value={filter} onValueChange={(value) => setFilter(value as typeof filter)}>
           <SelectTrigger className="w-full sm:w-[180px]">
