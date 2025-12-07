@@ -50,14 +50,6 @@ export const metadata: Metadata = {
     description: "Track your reading. Share your journey with the community.",
     url: 'https://bookfolio.me',
     siteName: 'Bookfolio',
-    images: [
-      {
-        url: '/og-image.svg',
-        width: 1200,
-        height: 630,
-        alt: 'Bookfolio - Your Bookshelf, Beautifully Online',
-      },
-    ],
     locale: 'en_US',
     type: 'website',
   },
@@ -65,7 +57,6 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: "Bookfolio - Your Bookshelf, Beautifully Online",
     description: "Track your reading. Share your journey with the community.",
-    images: ['/og-image.svg'],
   },
 };
 

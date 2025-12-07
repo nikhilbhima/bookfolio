@@ -118,7 +118,7 @@ export function PublicProfileView({ profile, books }: PublicProfileViewProps) {
             <div className="relative p-2 sm:p-5 transition-all border border-purple-500/30 bg-purple-500/10 backdrop-blur-sm glow-purple-hover flex flex-col items-center md:items-start justify-center md:justify-start rounded-lg sm:rounded-2xl">
               <div className="flex flex-col md:flex-row items-center gap-1 sm:gap-3 w-full">
                 <div className="p-1 sm:p-2.5 rounded-md sm:rounded-xl bg-purple-500/10 border border-purple-500/30 shrink-0">
-                  <Clock className="w-3 h-3 sm:w-5 sm:h-5 text-blue-400" />
+                  <Clock className="w-3 h-3 sm:w-5 sm:h-5 text-purple-400" />
                 </div>
                 <div className="flex-1 min-w-0 text-center md:text-left">
                   <p className="text-base sm:text-3xl font-bold">{toReadBooks}</p>
@@ -132,7 +132,7 @@ export function PublicProfileView({ profile, books }: PublicProfileViewProps) {
         {/* Books Grid */}
         <div className="max-w-7xl mx-auto space-y-4 sm:space-y-6">
           <div className="flex items-center justify-between">
-            <h2 className="text-xl sm:text-2xl font-serif font-semibold">Book Collection</h2>
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold">Book Collection</h2>
             <p className="text-sm text-muted-foreground">
               {filteredBooks.length} {filteredBooks.length === 1 ? "book" : "books"}
             </p>

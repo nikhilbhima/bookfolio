@@ -84,7 +84,7 @@ export function ProfileCard({ profile: propProfile, isPublic = false }: ProfileC
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between mb-1 sm:mb-2">
               <div className="flex-1 min-w-0">
-                <h2 className="text-lg sm:text-xl md:text-2xl font-serif font-semibold truncate">
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-serif font-bold truncate">
                   {profile.name}
                 </h2>
                 <p className="text-xs sm:text-sm text-muted-foreground truncate">
@@ -114,11 +114,11 @@ export function ProfileCard({ profile: propProfile, isPublic = false }: ProfileC
                 <p className="text-[10px] sm:text-xs text-muted-foreground mb-1 sm:mb-1.5">
                   Favorite Genres
                 </p>
-                <div className="flex flex-wrap gap-1 sm:gap-1.5">
+                <div className="flex flex-wrap gap-1.5 sm:gap-2">
                   {profile.favoriteGenres.map((genre) => (
                     <span
                       key={genre}
-                      className="px-2 sm:px-2.5 py-0.5 sm:py-1 text-[10px] sm:text-xs rounded-full bg-secondary text-secondary-foreground"
+                      className="px-2.5 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-xs rounded-full bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 text-foreground font-medium"
                     >
                       {genre}
                     </span>
@@ -142,10 +142,10 @@ export function ProfileCard({ profile: propProfile, isPublic = false }: ProfileC
                     href={url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-muted-foreground hover:text-foreground transition-colors"
+                    className="text-muted-foreground hover:text-foreground hover:bg-secondary/80 p-1.5 sm:p-2 rounded-full transition-all"
                     title={platform.label}
                   >
-                    <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                    <Icon className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
                   </a>
                 );
               })}

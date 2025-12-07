@@ -104,7 +104,7 @@ export function PreviewMobile() {
               {/* Profile Info */}
               <div className="flex-1 min-w-0">
                 <div className="mb-1">
-                  <h2 className="text-lg font-serif font-semibold truncate">{PREVIEW_PROFILE.display_name}</h2>
+                  <h2 className="text-xl font-serif font-bold truncate">{PREVIEW_PROFILE.display_name}</h2>
                   <p className={`text-xs truncate ${previewTheme === "dark" ? "text-zinc-400" : "text-zinc-500"}`}>@{PREVIEW_PROFILE.username}</p>
                 </div>
 
@@ -113,11 +113,11 @@ export function PreviewMobile() {
                 {/* Favorite Genres */}
                 <div className="mb-2">
                   <p className={`text-[10px] mb-1 ${previewTheme === "dark" ? "text-zinc-400" : "text-zinc-500"}`}>Favorite Genres</p>
-                  <div className="flex flex-wrap gap-1">
+                  <div className="flex flex-wrap gap-1.5">
                     {PREVIEW_PROFILE.favoriteGenres.slice(0, 3).map((genre) => (
                       <span
                         key={genre}
-                        className={`px-2 py-0.5 text-[10px] rounded-full ${previewTheme === "dark" ? "bg-zinc-800 text-zinc-300" : "bg-zinc-100 text-zinc-700"}`}
+                        className="px-2.5 py-1 text-[10px] rounded-full bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 font-medium"
                       >
                         {genre}
                       </span>

@@ -181,7 +181,7 @@ export function BookCard({ book, view, isPublic = false, isMoveMode = false }: B
     <>
       <Card
         data-book-card-content
-        className={`group relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-105 ${
+        className={`group relative overflow-hidden transition-all duration-300 hover:shadow-xl ${
           hoveredButton === 'edit' ? 'ring-2 ring-blue-500/50 shadow-[0_0_15px_rgba(59,130,246,0.3)]' :
           hoveredButton === 'delete' ? 'ring-2 ring-red-500/50 shadow-[0_0_15px_rgba(239,68,68,0.3)]' : ''
         } ${isSelected ? 'ring-2 ring-blue-500' : ''} ${isMoveMode ? 'ring-2 ring-blue-500 ring-offset-2' : ''}`}
@@ -296,32 +296,37 @@ export function BookCard({ book, view, isPublic = false, isMoveMode = false }: B
             <p className="text-[10px] sm:text-xs text-muted-foreground truncate mt-0.5" title={book.author}>
               {book.author}
             </p>
+            {book.genre && (
+              <p className="hidden sm:block text-[9px] text-muted-foreground/70 truncate mt-0.5" title={book.genre}>
+                {book.genre}
+              </p>
+            )}
           </div>
 
           {/* Mobile action buttons + rating row */}
           {!isPublic && (
             <div className="flex items-center justify-between mt-2 sm:hidden">
               <StarRating rating={book.rating} readonly size="sm" />
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-1.5">
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     setIsEditOpen(true);
                   }}
-                  className="p-1.5 rounded-md bg-muted hover:bg-muted/80 text-muted-foreground hover:text-foreground transition-colors"
+                  className="p-2.5 rounded-md bg-muted hover:bg-muted/80 text-muted-foreground hover:text-foreground transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center"
                   aria-label={`Edit ${book.title}`}
                 >
-                  <Edit className="w-3 h-3" aria-hidden="true" />
+                  <Edit className="w-4 h-4" aria-hidden="true" />
                 </button>
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     setIsDeleteOpen(true);
                   }}
-                  className="p-1.5 rounded-md bg-muted hover:bg-red-500/20 text-muted-foreground hover:text-red-500 transition-colors"
+                  className="p-2.5 rounded-md bg-muted hover:bg-red-500/20 text-muted-foreground hover:text-red-500 transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center"
                   aria-label={`Delete ${book.title}`}
                 >
-                  <Trash2 className="w-3 h-3" aria-hidden="true" />
+                  <Trash2 className="w-4 h-4" aria-hidden="true" />
                 </button>
               </div>
             </div>

@@ -34,7 +34,7 @@ export function FiltersBar() {
             placeholder="Search books, authors..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10 h-9 sm:h-10 text-sm"
+            className="pl-10 text-sm"
           />
         </div>
 
@@ -42,7 +42,7 @@ export function FiltersBar() {
         <div className="flex gap-2 sm:gap-3">
           {/* Status Filter Dropdown */}
           <Select value={filter} onValueChange={(value) => setFilter(value as typeof filter)}>
-            <SelectTrigger className="flex-1 sm:flex-none sm:w-[180px] h-9 sm:h-10 text-xs sm:text-sm">
+            <SelectTrigger className="flex-1 sm:flex-none sm:w-[180px] h-11 sm:h-10 text-sm">
               <SelectValue placeholder="Filter" />
             </SelectTrigger>
             <SelectContent>
@@ -55,7 +55,7 @@ export function FiltersBar() {
 
           {/* Sort Dropdown */}
           <Select value={sortBy} onValueChange={(value) => setSortBy(value as typeof sortBy)}>
-            <SelectTrigger className="flex-1 sm:flex-none sm:w-[160px] h-9 sm:h-10 text-xs sm:text-sm">
+            <SelectTrigger className="flex-1 sm:flex-none sm:w-[160px] h-11 sm:h-10 text-sm">
               <SelectValue placeholder="Sort" />
             </SelectTrigger>
             <SelectContent>
@@ -70,7 +70,7 @@ export function FiltersBar() {
           {/* Add Book Button */}
           <Button
             onClick={() => setIsAddBookOpen(true)}
-            className="gap-1 sm:gap-2 bg-blue-500 hover:bg-blue-600 text-white h-9 sm:h-10 px-3 sm:px-4 text-xs sm:text-sm font-medium shadow-sm"
+            className="gap-1 sm:gap-2 bg-blue-500 hover:bg-blue-600 text-white h-11 sm:h-10 px-3 sm:px-4 text-sm font-medium shadow-sm"
           >
             <Plus className="w-4 h-4" />
             <span className="hidden sm:inline">Add Book</span>

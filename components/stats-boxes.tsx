@@ -26,6 +26,7 @@ export function StatsBoxes() {
       bgColor: "bg-blue-500/10",
       borderColor: "border-blue-500/30",
       hoverClass: "glow-blue-hover",
+      activeRing: "ring-blue-500/60",
     },
     {
       label: "Currently Reading",
@@ -36,6 +37,7 @@ export function StatsBoxes() {
       bgColor: "bg-amber-500/10",
       borderColor: "border-amber-500/30",
       hoverClass: "glow-amber-hover",
+      activeRing: "ring-amber-500/60",
     },
     {
       label: "Completed",
@@ -46,6 +48,7 @@ export function StatsBoxes() {
       bgColor: "bg-emerald-500/10",
       borderColor: "border-emerald-500/30",
       hoverClass: "glow-emerald-hover",
+      activeRing: "ring-emerald-500/60",
     },
     {
       label: "To Read",
@@ -56,6 +59,7 @@ export function StatsBoxes() {
       bgColor: "bg-purple-500/10",
       borderColor: "border-purple-500/30",
       hoverClass: "glow-purple-hover",
+      activeRing: "ring-purple-500/60",
     },
   ];
 
@@ -69,9 +73,9 @@ export function StatsBoxes() {
           <Card
             key={item.filter}
             onClick={() => setFilter(item.filter)}
-            className={`relative p-1.5 sm:p-3 md:p-5 cursor-pointer transition-all border ${item.borderColor} ${item.bgColor} backdrop-blur-sm ${
+            className={`relative p-2 sm:p-3 md:p-5 cursor-pointer transition-all duration-200 border ${item.borderColor} ${item.bgColor} backdrop-blur-sm ${
               item.hoverClass
-            } ${isActive ? "ring-2 ring-ring" : ""} flex flex-col items-center justify-center rounded-lg sm:rounded-xl md:rounded-2xl`}
+            } ${isActive ? `ring-2 ${item.activeRing} shadow-lg` : ""} flex flex-col items-center justify-center rounded-lg sm:rounded-xl md:rounded-2xl hover:scale-[1.02]`}
           >
             <div className="flex flex-col items-center gap-0.5 sm:gap-1 md:gap-2 w-full">
               <div

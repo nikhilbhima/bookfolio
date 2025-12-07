@@ -343,9 +343,9 @@ export function BooksGrid() {
                 size="sm"
                 onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
                 disabled={currentPage === 1}
-                className="h-9 w-9 p-0"
+                className="h-10 w-10 sm:h-11 sm:w-11 p-0"
               >
-                <ChevronLeft className="h-4 w-4" />
+                <ChevronLeft className="h-5 w-5" />
               </Button>
 
               <div className="flex items-center gap-1">
@@ -389,7 +389,7 @@ export function BooksGrid() {
                         variant={currentPage === page ? "default" : "outline"}
                         size="sm"
                         onClick={() => setCurrentPage(page as number)}
-                        className="h-9 w-9 p-0"
+                        className="h-10 w-10 sm:h-11 sm:w-11 p-0"
                       >
                         {page}
                       </Button>
@@ -403,9 +403,9 @@ export function BooksGrid() {
                 size="sm"
                 onClick={() => setCurrentPage((prev) => Math.min(totalPages, prev + 1))}
                 disabled={currentPage === totalPages}
-                className="h-9 w-9 p-0"
+                className="h-10 w-10 sm:h-11 sm:w-11 p-0"
               >
-                <ChevronRight className="h-4 w-4" />
+                <ChevronRight className="h-5 w-5" />
               </Button>
             </div>
           )}
