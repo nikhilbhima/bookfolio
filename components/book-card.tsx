@@ -149,16 +149,18 @@ export function BookCard({ book, view, isPublic = false, isMoveMode = false }: B
                   onMouseEnter={() => setHoveredButton('edit')}
                   onMouseLeave={() => setHoveredButton(null)}
                   className="p-1.5 sm:p-2 rounded-lg bg-blue-500/15 border border-blue-500/40 text-blue-400 hover:bg-blue-500/25 hover:border-blue-500/60 transition-all glow-blue-hover"
+                  aria-label={`Edit ${book.title}`}
                 >
-                  <Edit className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                  <Edit className="w-3 h-3 sm:w-3.5 sm:h-3.5" aria-hidden="true" />
                 </button>
                 <button
                   onClick={() => setIsDeleteOpen(true)}
                   onMouseEnter={() => setHoveredButton('delete')}
                   onMouseLeave={() => setHoveredButton(null)}
                   className="p-1.5 sm:p-2 rounded-lg bg-red-500/15 border border-red-500/40 text-red-400 hover:bg-red-500/25 hover:border-red-500/60 transition-all"
+                  aria-label={`Delete ${book.title}`}
                 >
-                  <Trash2 className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                  <Trash2 className="w-3 h-3 sm:w-3.5 sm:h-3.5" aria-hidden="true" />
                 </button>
               </div>
             )}
@@ -224,7 +226,7 @@ export function BookCard({ book, view, isPublic = false, isMoveMode = false }: B
 
 
         <div
-          className="relative aspect-[2/3] bg-muted cursor-pointer overflow-hidden rounded-t-lg"
+          className="relative aspect-[2/3] bg-muted cursor-pointer overflow-hidden rounded-t-xl"
           onClick={(e) => {
             // Don't handle if clicking on a button - let button handle it
             const target = e.target as HTMLElement;
@@ -269,8 +271,9 @@ export function BookCard({ book, view, isPublic = false, isMoveMode = false }: B
                 onMouseEnter={() => setHoveredButton('edit')}
                 onMouseLeave={() => setHoveredButton(null)}
                 className="p-3 rounded-lg bg-blue-500/15 border border-blue-500/40 text-blue-400 hover:bg-blue-500/25 hover:border-blue-500/60 transition-all glow-blue-hover pointer-events-auto"
+                aria-label={`Edit ${book.title}`}
               >
-                <Edit className="w-4 h-4 pointer-events-none" />
+                <Edit className="w-4 h-4 pointer-events-none" aria-hidden="true" />
               </button>
               <button
                 onMouseDown={(e) => {
@@ -283,8 +286,9 @@ export function BookCard({ book, view, isPublic = false, isMoveMode = false }: B
                 onMouseEnter={() => setHoveredButton('delete')}
                 onMouseLeave={() => setHoveredButton(null)}
                 className="p-3 rounded-lg bg-red-500/15 border border-red-500/40 text-red-400 hover:bg-red-500/25 hover:border-red-500/60 transition-all pointer-events-auto"
+                aria-label={`Delete ${book.title}`}
               >
-                <Trash2 className="w-4 h-4 pointer-events-none" />
+                <Trash2 className="w-4 h-4 pointer-events-none" aria-hidden="true" />
               </button>
             </div>
           )}
@@ -303,8 +307,9 @@ export function BookCard({ book, view, isPublic = false, isMoveMode = false }: B
                   setIsEditOpen(true);
                 }}
                 className="flex-1 p-2 rounded-lg bg-blue-500/90 backdrop-blur-sm border border-blue-400/60 text-white hover:bg-blue-600 transition-all shadow-lg pointer-events-auto"
+                aria-label={`Edit ${book.title}`}
               >
-                <Edit className="w-3.5 h-3.5 mx-auto pointer-events-none" />
+                <Edit className="w-3.5 h-3.5 mx-auto pointer-events-none" aria-hidden="true" />
               </button>
               <button
                 onMouseDown={(e) => {
@@ -318,8 +323,9 @@ export function BookCard({ book, view, isPublic = false, isMoveMode = false }: B
                   setIsDeleteOpen(true);
                 }}
                 className="flex-1 p-2 rounded-lg bg-red-500/90 backdrop-blur-sm border border-red-400/60 text-white hover:bg-red-600 transition-all shadow-lg pointer-events-auto"
+                aria-label={`Delete ${book.title}`}
               >
-                <Trash2 className="w-3.5 h-3.5 mx-auto pointer-events-none" />
+                <Trash2 className="w-3.5 h-3.5 mx-auto pointer-events-none" aria-hidden="true" />
               </button>
             </div>
           )}
@@ -345,19 +351,19 @@ export function BookCard({ book, view, isPublic = false, isMoveMode = false }: B
           )}
         </div>
 
-        <div className="p-3 cursor-pointer" onClick={(e) => {
+        <div className="p-2.5 sm:p-3 cursor-pointer" onClick={(e) => {
           if (!(e.target as HTMLElement).closest('button')) {
             setIsDetailsOpen(true);
           }
         }}>
-          <h3 className="font-semibold text-sm truncate" title={book.title}>
+          <h3 className="font-semibold text-[11px] sm:text-sm truncate leading-tight" title={book.title}>
             {book.title}
           </h3>
-          <p className="text-xs text-muted-foreground truncate" title={book.author}>
+          <p className="text-[10px] sm:text-xs text-muted-foreground truncate mt-0.5" title={book.author}>
             {book.author}
           </p>
           {book.rating > 0 && (
-            <div className="mt-2">
+            <div className="mt-1.5 sm:mt-2">
               <StarRating rating={book.rating} readonly size="sm" />
             </div>
           )}

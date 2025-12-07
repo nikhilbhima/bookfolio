@@ -70,11 +70,24 @@ export async function GET(request: NextRequest) {
                          user.email?.split('@')[0] ||
                          'User'
 
-      // Get pending username from cookie
-      const pendingUsername = cookieStore.get('pending_username')?.value
+      // Get pending username from cookie, or generate one from user data
+      let pendingUsername: string = cookieStore.get('pending_username')?.value || ''
 
       if (!pendingUsername) {
-        return NextResponse.redirect(`${origin}/login?error=no_username`)
+        // Generate username from email or name if no pending username cookie
+        const emailPart = user.email?.split('@')[0] || ''
+        const namePart = (user.user_metadata?.full_name || user.user_metadata?.name || '')
+          .toLowerCase()
+          .replace(/\s+/g, '_')
+          .replace(/[^a-z0-9_-]/g, '')
+
+        pendingUsername = namePart || emailPart || `user_${Date.now().toString().slice(-6)}`
+      }
+
+      // Ensure username meets requirements (3-20 chars, lowercase + numbers + _ -)
+      pendingUsername = pendingUsername.slice(0, 20).toLowerCase()
+      if (pendingUsername.length < 3) {
+        pendingUsername = `user_${Date.now().toString().slice(-6)}`
       }
 
       // Re-check username availability to prevent race condition

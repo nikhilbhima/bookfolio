@@ -97,8 +97,8 @@ export function PreviewDashboard() {
     <div className="space-y-4">
       {/* Preview Label */}
       <div className="text-center px-4">
-        <div className="inline-flex items-center gap-1 px-2 py-0.5 sm:py-1 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-full">
-          <span className="text-[9px] sm:text-[10px] font-medium text-blue-700 dark:text-blue-300">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 sm:py-1.5 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-full">
+          <span className="text-xs sm:text-sm font-medium text-blue-700 dark:text-blue-300">
             Interactive preview of a Bookfolio user
           </span>
         </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useBookStore } from "@/lib/store";
+import { toast } from "sonner";
 import {
   Dialog,
   DialogContent,
@@ -25,9 +26,15 @@ export function DeleteConfirmDialog({
 }: DeleteConfirmDialogProps) {
   const deleteBook = useBookStore((state) => state.deleteBook);
 
-  const handleDelete = () => {
-    deleteBook(bookId);
-    onClose();
+  const handleDelete = async () => {
+    try {
+      await deleteBook(bookId);
+      toast.success("Book deleted successfully");
+      onClose();
+    } catch (error) {
+      console.error("Error deleting book:", error);
+      toast.error("Failed to delete book. Please try again.");
+    }
   };
 
   return (

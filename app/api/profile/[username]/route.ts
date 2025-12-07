@@ -21,6 +21,9 @@ interface SupabaseBook {
   pages?: number;
 }
 
+// Username validation regex - must match validations.ts
+const usernameRegex = /^[a-z0-9_-]{3,20}$/;
+
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ username: string }> }
@@ -34,12 +37,21 @@ export async function GET(
     );
   }
 
+  // Validate username format
+  const lowerUsername = username.toLowerCase();
+  if (!usernameRegex.test(lowerUsername)) {
+    return NextResponse.json(
+      { error: "Invalid username format" },
+      { status: 400 }
+    );
+  }
+
   try {
-    // Fetch profile by username
+    // Fetch profile by username (case-insensitive)
     const { data: profileData, error: profileError } = await supabase
       .from("profiles")
       .select("*")
-      .eq("username", username)
+      .ilike("username", lowerUsername)
       .single();
 
     if (profileError || !profileData) {

@@ -14,6 +14,7 @@ import { Textarea } from "./ui/textarea";
 import { Label } from "./ui/label";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { X, Plus, Edit, Trash2 } from "lucide-react";
+import { toast } from "sonner";
 import { ImageCropModal } from "./image-crop-modal";
 import {
   SOCIAL_PLATFORMS,
@@ -85,6 +86,18 @@ export function EditProfileModal({ isOpen, onClose }: EditProfileModalProps) {
   const handleProfilePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      // Validate file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error("Image must be less than 5MB");
+        return;
+      }
+
+      // Validate file type
+      if (!file.type.startsWith("image/")) {
+        toast.error("Please upload a valid image file");
+        return;
+      }
+
       const reader = new FileReader();
       reader.onloadend = () => {
         setTempImageSrc(reader.result as string);
@@ -151,7 +164,7 @@ export function EditProfileModal({ isOpen, onClose }: EditProfileModalProps) {
     );
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     // Process social links - filter out empty values
@@ -162,15 +175,20 @@ export function EditProfileModal({ isOpen, onClose }: EditProfileModalProps) {
         value: link.value.trim(),
       }));
 
-    updateProfile({
-      name: formData.name,
-      bio: formData.bio,
-      profilePhoto: formData.profilePhoto,
-      favoriteGenres: selectedGenres,
-      socialLinks: processedSocialLinks,
-    });
-
-    onClose();
+    try {
+      await updateProfile({
+        name: formData.name,
+        bio: formData.bio,
+        profilePhoto: formData.profilePhoto,
+        favoriteGenres: selectedGenres,
+        socialLinks: processedSocialLinks,
+      });
+      toast.success("Profile updated successfully");
+      onClose();
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      toast.error("Failed to update profile. Please try again.");
+    }
   };
 
   return (
@@ -198,15 +216,17 @@ export function EditProfileModal({ isOpen, onClose }: EditProfileModalProps) {
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
                     className="p-2 rounded-lg bg-blue-500/20 border border-blue-500/40 text-blue-400 hover:bg-blue-500/30 transition-all"
+                    aria-label="Change profile photo"
                   >
-                    <Edit className="w-4 h-4" />
+                    <Edit className="w-4 h-4" aria-hidden="true" />
                   </button>
                   <button
                     type="button"
                     onClick={handleDeletePhoto}
                     className="p-2 rounded-lg bg-red-500/20 border border-red-500/40 text-red-400 hover:bg-red-500/30 transition-all"
+                    aria-label="Delete profile photo"
                   >
-                    <Trash2 className="w-4 h-4" />
+                    <Trash2 className="w-4 h-4" aria-hidden="true" />
                   </button>
                 </div>
               )}

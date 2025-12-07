@@ -209,9 +209,9 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(combined.slice(0, 40));
   } catch (error) {
     console.error("Book search error:", error);
-    const errorMessage = error instanceof Error ? error.message : "Failed to search books";
+    // Don't expose internal error details to clients
     return NextResponse.json(
-      { error: errorMessage, details: String(error) },
+      { error: "Failed to search books. Please try again." },
       { status: 500 }
     );
   }

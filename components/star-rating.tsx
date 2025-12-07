@@ -1,7 +1,7 @@
 "use client";
 
 import { Star } from "lucide-react";
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback } from "react";
 
 interface StarRatingProps {
   rating: number;
@@ -17,6 +17,7 @@ export function StarRating({
   size = "md",
 }: StarRatingProps) {
   const [hoverRating, setHoverRating] = useState<number | null>(null);
+  const [focusedStar, setFocusedStar] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const sizes = {
@@ -53,7 +54,44 @@ export function StarRating({
     setHoverRating(null);
   };
 
-  const displayRating = hoverRating !== null ? hoverRating : rating;
+  // Keyboard navigation for accessibility
+  const handleKeyDown = useCallback((e: React.KeyboardEvent, starValue: number) => {
+    if (readonly || !onRatingChange) return;
+
+    switch (e.key) {
+      case 'Enter':
+      case ' ':
+        e.preventDefault();
+        onRatingChange(starValue);
+        break;
+      case 'ArrowRight':
+        e.preventDefault();
+        if (starValue < 5) {
+          const nextStar = document.querySelector(`[data-star="${starValue + 1}"]`) as HTMLElement;
+          nextStar?.focus();
+        }
+        break;
+      case 'ArrowLeft':
+        e.preventDefault();
+        if (starValue > 1) {
+          const prevStar = document.querySelector(`[data-star="${starValue - 1}"]`) as HTMLElement;
+          prevStar?.focus();
+        }
+        break;
+      case 'Home':
+        e.preventDefault();
+        const firstStar = document.querySelector('[data-star="1"]') as HTMLElement;
+        firstStar?.focus();
+        break;
+      case 'End':
+        e.preventDefault();
+        const lastStar = document.querySelector('[data-star="5"]') as HTMLElement;
+        lastStar?.focus();
+        break;
+    }
+  }, [readonly, onRatingChange]);
+
+  const displayRating = hoverRating !== null ? hoverRating : (focusedStar !== null ? focusedStar : rating);
 
   return (
     <div className="flex items-center gap-2">
@@ -65,16 +103,27 @@ export function StarRating({
         className={`flex items-center gap-0.5 ${
           readonly ? "cursor-default" : "cursor-pointer"
         }`}
+        role={readonly ? "img" : "group"}
+        aria-label={readonly ? `Rating: ${rating} out of 5 stars` : "Rate this book"}
       >
         {[1, 2, 3, 4, 5].map((star) => {
           const isFull = displayRating >= star;
           const isHalf = displayRating >= star - 0.5 && displayRating < star;
+          const isInteractive = !readonly && onRatingChange;
 
           return (
             <div
               key={star}
+              data-star={star}
+              tabIndex={isInteractive ? 0 : -1}
+              role={isInteractive ? "button" : undefined}
+              aria-label={isInteractive ? `Rate ${star} star${star > 1 ? 's' : ''}` : undefined}
+              aria-pressed={isInteractive ? rating >= star : undefined}
+              onKeyDown={(e) => handleKeyDown(e, star)}
+              onFocus={() => !readonly && setFocusedStar(star)}
+              onBlur={() => setFocusedStar(null)}
               className={`relative ${
-                !readonly && "hover:scale-110"
+                !readonly && "hover:scale-110 focus:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1 rounded"
               } transition-transform`}
             >
               <Star
@@ -83,11 +132,13 @@ export function StarRating({
                     ? "fill-amber-400 text-amber-400"
                     : "text-muted-foreground/40"
                 }`}
+                aria-hidden="true"
               />
               {isHalf && (
                 <div className="absolute inset-0 overflow-hidden w-1/2">
                   <Star
                     className={`${sizes[size]} fill-amber-400 text-amber-400`}
+                    aria-hidden="true"
                   />
                 </div>
               )}
@@ -95,9 +146,9 @@ export function StarRating({
           );
         })}
       </div>
-      {!readonly && hoverRating !== null && (
-        <span className="text-xs text-muted-foreground font-medium min-w-[2rem]">
-          {hoverRating.toFixed(1)}
+      {!readonly && (hoverRating !== null || focusedStar !== null) && (
+        <span className="text-xs text-muted-foreground font-medium min-w-[2rem]" aria-live="polite">
+          {(hoverRating || focusedStar || 0).toFixed(1)}
         </span>
       )}
     </div>

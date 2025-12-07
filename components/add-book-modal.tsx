@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect, useMemo } from "react";
 import { X, Upload, Search, Loader2, ChevronDown, ChevronUp } from "lucide-react";
 import { useBookStore } from "@/lib/store";
 import { Book } from "@/lib/mock-data";
+import { toast } from "sonner";
 import {
   Dialog,
   DialogContent,
@@ -162,8 +163,10 @@ export function AddBookModal({ isOpen, onClose, bookToEdit }: AddBookModalProps)
 
       if (bookToEdit) {
         await updateBook(bookToEdit.id, bookData);
+        toast.success("Book updated successfully");
       } else {
         await addBook(bookData);
+        toast.success("Book added to your collection");
       }
 
       // Reset and close
@@ -185,7 +188,7 @@ export function AddBookModal({ isOpen, onClose, bookToEdit }: AddBookModalProps)
       onClose();
     } catch (error) {
       console.error("Error saving book:", error);
-      alert("Failed to save book. Please try again.");
+      toast.error("Failed to save book. Please try again.");
     } finally {
       setIsSubmitting(false);
     }

@@ -246,38 +246,38 @@ export function BooksGrid() {
   }, [isDragEnabled, books, currentBooks, reorderBooks]);
 
   return (
-    <div className="space-y-3 sm:space-y-4">
+    <div className="space-y-2 sm:space-y-3 md:space-y-4">
       {/* View Switcher */}
-      <div className="flex justify-between items-center max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="flex justify-between items-center max-w-[90rem] mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex items-center gap-2">
           {!isDragEnabled && view === "grid" && (
-            <p className="text-xs text-muted-foreground">
+            <p className="text-[10px] sm:text-xs text-muted-foreground hidden sm:block">
               Drag disabled when filters/search/sort are active
             </p>
           )}
         </div>
-        <div className="flex items-center gap-1 p-1 bg-muted rounded-lg">
+        <div className="flex items-center gap-0.5 sm:gap-1 p-0.5 sm:p-1 bg-muted rounded-md sm:rounded-lg">
           <Button
             variant="ghost"
             size="sm"
             onClick={() => setView("grid")}
-            className={`gap-1 sm:gap-2 px-2 sm:px-3 ${
+            className={`gap-1 sm:gap-2 px-2 sm:px-3 h-7 sm:h-9 ${
               view === "grid" ? "bg-background shadow-sm" : "hover:bg-background/50"
             }`}
           >
-            <Grid3x3 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-            <span className="text-xs sm:text-sm">Grid</span>
+            <Grid3x3 className="w-3 h-3 sm:w-4 sm:h-4" />
+            <span className="text-[10px] sm:text-sm">Grid</span>
           </Button>
           <Button
             variant="ghost"
             size="sm"
             onClick={() => setView("list")}
-            className={`gap-1 sm:gap-2 px-2 sm:px-3 ${
+            className={`gap-1 sm:gap-2 px-2 sm:px-3 h-7 sm:h-9 ${
               view === "list" ? "bg-background shadow-sm" : "hover:bg-background/50"
             }`}
           >
-            <List className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-            <span className="text-xs sm:text-sm">List</span>
+            <List className="w-3 h-3 sm:w-4 sm:h-4" />
+            <span className="text-[10px] sm:text-sm">List</span>
           </Button>
         </div>
       </div>
@@ -304,8 +304,8 @@ export function BooksGrid() {
             ref={gridRef}
             className={
               view === "grid"
-                ? "grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8 gap-3 sm:gap-4 relative max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8"
-                : "space-y-2 max-w-4xl mx-auto"
+                ? "grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8 gap-2 sm:gap-3 md:gap-4 relative max-w-[90rem] mx-auto px-3 sm:px-6 lg:px-8"
+                : "space-y-2 max-w-4xl mx-auto px-3 sm:px-0"
             }
           >
             {currentBooks.map((book, index) => (
@@ -349,17 +349,53 @@ export function BooksGrid() {
               </Button>
 
               <div className="flex items-center gap-1">
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                  <Button
-                    key={page}
-                    variant={currentPage === page ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setCurrentPage(page)}
-                    className="h-9 w-9 p-0"
-                  >
-                    {page}
-                  </Button>
-                ))}
+                {(() => {
+                  const pages: (number | string)[] = [];
+                  const maxVisible = 5;
+
+                  if (totalPages <= maxVisible + 2) {
+                    // Show all pages if total is small
+                    for (let i = 1; i <= totalPages; i++) pages.push(i);
+                  } else {
+                    // Always show first page
+                    pages.push(1);
+
+                    if (currentPage > 3) {
+                      pages.push('...');
+                    }
+
+                    // Show pages around current
+                    const start = Math.max(2, currentPage - 1);
+                    const end = Math.min(totalPages - 1, currentPage + 1);
+
+                    for (let i = start; i <= end; i++) {
+                      if (!pages.includes(i)) pages.push(i);
+                    }
+
+                    if (currentPage < totalPages - 2) {
+                      pages.push('...');
+                    }
+
+                    // Always show last page
+                    if (!pages.includes(totalPages)) pages.push(totalPages);
+                  }
+
+                  return pages.map((page, idx) =>
+                    page === '...' ? (
+                      <span key={`ellipsis-${idx}`} className="px-2 text-muted-foreground">...</span>
+                    ) : (
+                      <Button
+                        key={page}
+                        variant={currentPage === page ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => setCurrentPage(page as number)}
+                        className="h-9 w-9 p-0"
+                      >
+                        {page}
+                      </Button>
+                    )
+                  );
+                })()}
               </div>
 
               <Button
