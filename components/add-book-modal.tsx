@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect, useMemo } from "react";
-import { X, Upload, Search, Loader2, ChevronDown, ChevronUp } from "lucide-react";
+import { X, Upload, Search, Loader2, ChevronDown, ChevronUp, ChevronLeft, ChevronRight } from "lucide-react";
 import { useBookStore } from "@/lib/store";
 import { Book } from "@/lib/mock-data";
 import { toast } from "sonner";
@@ -286,27 +286,27 @@ export function AddBookModal({ isOpen, onClose, bookToEdit }: AddBookModalProps)
 
                   {/* Pagination */}
                   {totalPages > 1 && (
-                    <div className="flex items-center justify-center gap-2 pt-2">
+                    <div className="flex items-center justify-center gap-3 pt-3">
                       <Button
                         variant="outline"
                         size="sm"
                         onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                         disabled={currentPage === 1}
-                        className="h-8 w-8 p-0"
+                        className="h-10 w-10 p-0"
                       >
-                        ←
+                        <ChevronLeft className="w-5 h-5" />
                       </Button>
-                      <span className="text-xs sm:text-sm text-muted-foreground">
-                        Page {currentPage} of {totalPages}
+                      <span className="text-sm font-medium min-w-[80px] text-center">
+                        {currentPage} / {totalPages}
                       </span>
                       <Button
                         variant="outline"
                         size="sm"
                         onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                         disabled={currentPage === totalPages}
-                        className="h-8 w-8 p-0"
+                        className="h-10 w-10 p-0"
                       >
-                        →
+                        <ChevronRight className="w-5 h-5" />
                       </Button>
                     </div>
                   )}

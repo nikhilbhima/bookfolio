@@ -42,27 +42,6 @@ export function BookCard({ book, view, isPublic = false, isMoveMode = false }: B
     toggleSelection(book.id);
   };
 
-  // Add effect to close buttons when clicking outside on mobile
-  React.useEffect(() => {
-    const handleClickOutside = (e: MouseEvent | TouchEvent) => {
-      if (isHovered && window.innerWidth < 640) {
-        const target = e.target as HTMLElement;
-        if (!target.closest('[data-book-card-content]')) {
-          setIsHovered(false);
-        }
-      }
-    };
-
-    if (isHovered) {
-      document.addEventListener('click', handleClickOutside);
-      document.addEventListener('touchstart', handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
-      document.removeEventListener('touchstart', handleClickOutside);
-    };
-  }, [isHovered]);
 
   const statusColors = {
     reading: "border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-300",
@@ -233,13 +212,7 @@ export function BookCard({ book, view, isPublic = false, isMoveMode = false }: B
             if (target.closest('button') || target.closest('[role="checkbox"]')) {
               return;
             }
-            // On mobile, first tap shows buttons, second tap opens details
-            if (window.innerWidth < 640) { // sm breakpoint
-              if (!isHovered) {
-                setIsHovered(true);
-                return;
-              }
-            }
+            // Single tap opens details on all devices
             setIsDetailsOpen(true);
           }}
         >
@@ -293,42 +266,6 @@ export function BookCard({ book, view, isPublic = false, isMoveMode = false }: B
             </div>
           )}
 
-          {isHovered && !isPublic && (
-            <div className="absolute bottom-2 left-2 right-2 flex items-center justify-center gap-2 sm:hidden">
-              <button
-                onMouseDown={(e) => {
-                  e.stopPropagation();
-                }}
-                onTouchStart={(e) => {
-                  e.stopPropagation();
-                }}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setIsEditOpen(true);
-                }}
-                className="flex-1 p-2 rounded-lg bg-blue-500/90 backdrop-blur-sm border border-blue-400/60 text-white hover:bg-blue-600 transition-all shadow-lg pointer-events-auto"
-                aria-label={`Edit ${book.title}`}
-              >
-                <Edit className="w-3.5 h-3.5 mx-auto pointer-events-none" aria-hidden="true" />
-              </button>
-              <button
-                onMouseDown={(e) => {
-                  e.stopPropagation();
-                }}
-                onTouchStart={(e) => {
-                  e.stopPropagation();
-                }}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setIsDeleteOpen(true);
-                }}
-                className="flex-1 p-2 rounded-lg bg-red-500/90 backdrop-blur-sm border border-red-400/60 text-white hover:bg-red-600 transition-all shadow-lg pointer-events-auto"
-                aria-label={`Delete ${book.title}`}
-              >
-                <Trash2 className="w-3.5 h-3.5 mx-auto pointer-events-none" aria-hidden="true" />
-              </button>
-            </div>
-          )}
 
           {isHovered && isPublic && (
             <div className="absolute inset-0 bg-black/60 flex items-center justify-center transition-all">
@@ -351,19 +288,53 @@ export function BookCard({ book, view, isPublic = false, isMoveMode = false }: B
           )}
         </div>
 
-        <div className="p-2.5 sm:p-3 cursor-pointer" onClick={(e) => {
-          if (!(e.target as HTMLElement).closest('button')) {
-            setIsDetailsOpen(true);
-          }
-        }}>
-          <h3 className="font-semibold text-[11px] sm:text-sm truncate leading-tight" title={book.title}>
-            {book.title}
-          </h3>
-          <p className="text-[10px] sm:text-xs text-muted-foreground truncate mt-0.5" title={book.author}>
-            {book.author}
-          </p>
-          {book.rating > 0 && (
-            <div className="mt-1.5 sm:mt-2">
+        <div className="p-2.5 sm:p-3">
+          <div className="cursor-pointer" onClick={() => setIsDetailsOpen(true)}>
+            <h3 className="font-semibold text-[11px] sm:text-sm truncate leading-tight" title={book.title}>
+              {book.title}
+            </h3>
+            <p className="text-[10px] sm:text-xs text-muted-foreground truncate mt-0.5" title={book.author}>
+              {book.author}
+            </p>
+          </div>
+
+          {/* Mobile action buttons + rating row */}
+          {!isPublic && (
+            <div className="flex items-center justify-between mt-2 sm:hidden">
+              <StarRating rating={book.rating} readonly size="sm" />
+              <div className="flex items-center gap-1">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsEditOpen(true);
+                  }}
+                  className="p-1.5 rounded-md bg-muted hover:bg-muted/80 text-muted-foreground hover:text-foreground transition-colors"
+                  aria-label={`Edit ${book.title}`}
+                >
+                  <Edit className="w-3 h-3" aria-hidden="true" />
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsDeleteOpen(true);
+                  }}
+                  className="p-1.5 rounded-md bg-muted hover:bg-red-500/20 text-muted-foreground hover:text-red-500 transition-colors"
+                  aria-label={`Delete ${book.title}`}
+                >
+                  <Trash2 className="w-3 h-3" aria-hidden="true" />
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Desktop rating - always show stars */}
+          <div className="mt-1.5 sm:mt-2 hidden sm:block">
+            <StarRating rating={book.rating} readonly size="sm" />
+          </div>
+
+          {/* Public view rating on mobile */}
+          {isPublic && (
+            <div className="mt-1.5 sm:hidden">
               <StarRating rating={book.rating} readonly size="sm" />
             </div>
           )}

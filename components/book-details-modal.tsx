@@ -62,10 +62,10 @@ export function BookDetailsModal({
           <DialogTitle className="sr-only">Book Details</DialogTitle>
         </DialogHeader>
 
-        <div className="grid md:grid-cols-[200px_1fr] gap-6 mt-2">
+        <div className="flex flex-col sm:flex-row gap-5 sm:gap-6 mt-2">
           {/* Book Cover */}
-          <div className="flex justify-center md:justify-start">
-            <div className="relative w-full max-w-[120px] md:max-w-[200px] aspect-[2/3] rounded-lg overflow-hidden bg-secondary/50 border border-border">
+          <div className="flex justify-center sm:justify-start shrink-0">
+            <div className="relative w-[140px] sm:w-[180px] aspect-[2/3] rounded-xl overflow-hidden bg-secondary/50 border border-border shadow-lg">
               {book.cover ? (
                 <Image
                   src={book.cover}
@@ -83,19 +83,19 @@ export function BookDetailsModal({
           </div>
 
           {/* Book Information */}
-          <div className="space-y-4">
-            <div>
-              <h2 className="text-2xl sm:text-3xl font-serif font-bold mb-2">
+          <div className="space-y-4 flex-1">
+            <div className="text-center sm:text-left">
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-serif font-bold mb-1">
                 {book.title}
               </h2>
-              <p className="text-lg text-muted-foreground">
+              <p className="text-base sm:text-lg text-muted-foreground">
                 {book.author}
               </p>
             </div>
 
             {/* Rating */}
             {book.rating > 0 && (
-              <div className="flex items-center gap-3">
+              <div className="flex items-center justify-center sm:justify-start gap-3">
                 <StarRating rating={book.rating} readonly size="lg" />
                 <span className="text-sm font-semibold text-muted-foreground">
                   {book.rating.toFixed(1)} / 5.0
@@ -104,7 +104,7 @@ export function BookDetailsModal({
             )}
 
             {/* Status Badge */}
-            <div>
+            <div className="flex justify-center sm:justify-start">
               <span
                 className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border ${
                   statusColors[book.status]
