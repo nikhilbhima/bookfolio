@@ -16,167 +16,35 @@ export interface BookSearchResult {
   averageRating?: number;
 }
 
-interface GoogleBooksVolumeInfo {
-  title?: string;
-  authors?: string[];
-  imageLinks?: {
-    smallThumbnail?: string;
-    thumbnail?: string;
-    medium?: string;
-    large?: string;
-    extraLarge?: string;
-  };
-  categories?: string[];
-  description?: string;
-  industryIdentifiers?: Array<{ type: string; identifier: string }>;
-  publishedDate?: string;
-  pageCount?: number;
-  ratingsCount?: number;
-  averageRating?: number;
-}
-
-interface GoogleBooksItem {
-  id: string;
-  volumeInfo: GoogleBooksVolumeInfo;
-}
-
-interface OpenLibraryDoc {
-  key?: string;
-  title?: string;
-  author_name?: string[];
-  cover_i?: number;
-  subject?: string[];
-  isbn?: string[];
-  first_publish_year?: number;
-  number_of_pages_median?: number;
+/**
+ * Get a fallback cover URL from OpenLibrary by ISBN
+ */
+export function getOpenLibraryCoverByISBN(isbn: string, size: "S" | "M" | "L" = "L"): string {
+  if (!isbn) return "";
+  return `https://covers.openlibrary.org/b/isbn/${isbn}-${size}.jpg`;
 }
 
 /**
- * Search Google Books API
+ * Check if a cover URL is likely valid (not empty or placeholder)
  */
-export async function searchGoogleBooks(
-  query: string
-): Promise<BookSearchResult[]> {
-  try {
-    const apiKey = process.env.NEXT_PUBLIC_GOOGLE_BOOKS_API_KEY;
-    const apiKeyParam = apiKey ? `&key=${apiKey}` : "";
-
-    const response = await fetch(
-      `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(
-        query
-      )}&maxResults=40&printType=books&orderBy=relevance${apiKeyParam}`
-    );
-
-    if (!response.ok) {
-      throw new Error("Google Books API request failed");
-    }
-
-    const data = await response.json();
-
-    if (!data.items) {
-      return [];
-    }
-
-    return data.items.map((item: GoogleBooksItem) => {
-      const volumeInfo = item.volumeInfo;
-      const imageLinks = volumeInfo.imageLinks || {};
-
-      // Get the highest quality cover available
-      const cover =
-        imageLinks.extraLarge ||
-        imageLinks.large ||
-        imageLinks.medium ||
-        imageLinks.thumbnail ||
-        imageLinks.smallThumbnail ||
-        "";
-
-      // Replace http with https and increase size
-      // Remove edge=curl parameter to get covers without the page fold
-      const secureCover = cover.replace("http://", "https://");
-      const largeCover = secureCover
-        .replace("&zoom=1", "&zoom=2")
-        .replace("&edge=curl", "");
-
-      return {
-        id: item.id,
-        title: volumeInfo.title || "Unknown Title",
-        author:
-          volumeInfo.authors?.join(", ") ||
-          "Unknown Author",
-        cover: largeCover,
-        coverLarge: largeCover,
-        genre: volumeInfo.categories?.[0] || "",
-        description: volumeInfo.description || "",
-        isbn:
-          volumeInfo.industryIdentifiers?.find(
-            (id) => id.type === "ISBN_13"
-          )?.identifier ||
-          volumeInfo.industryIdentifiers?.find(
-            (id) => id.type === "ISBN_10"
-          )?.identifier ||
-          "",
-        publishedDate: volumeInfo.publishedDate || "",
-        pageCount: volumeInfo.pageCount || 0,
-        source: "google" as const,
-        ratingsCount: volumeInfo.ratingsCount || 0,
-        averageRating: volumeInfo.averageRating || 0,
-      };
-    });
-  } catch (error) {
-    console.error("Google Books API error:", error);
-    return [];
-  }
+export function isValidCover(url: string | undefined): boolean {
+  if (!url) return false;
+  if (url.includes("placeholder") || url.includes("no-cover")) return false;
+  return url.length > 0;
 }
 
 /**
- * Search OpenLibrary API
+ * Get the best available cover with fallbacks
+ * Priority: provided cover -> OpenLibrary by ISBN -> placeholder
  */
-export async function searchOpenLibrary(
-  query: string
-): Promise<BookSearchResult[]> {
-  try {
-    const response = await fetch(
-      `https://openlibrary.org/search.json?q=${encodeURIComponent(
-        query
-      )}&limit=40&sort=editions`
-    );
-
-    if (!response.ok) {
-      throw new Error("OpenLibrary API request failed");
-    }
-
-    const data = await response.json();
-
-    if (!data.docs) {
-      return [];
-    }
-
-    return data.docs.map((doc: OpenLibraryDoc) => {
-      const coverId = doc.cover_i;
-      const cover = coverId
-        ? `https://covers.openlibrary.org/b/id/${coverId}-L.jpg`
-        : "";
-
-      return {
-        id: doc.key || "",
-        title: doc.title || "Unknown Title",
-        author:
-          doc.author_name?.join(", ") ||
-          "Unknown Author",
-        cover,
-        coverLarge: cover,
-        genre: doc.subject?.[0] || "",
-        description: "",
-        isbn: doc.isbn?.[0] || "",
-        publishedDate: doc.first_publish_year?.toString() || "",
-        pageCount: doc.number_of_pages_median || 0,
-        source: "openlibrary" as const,
-      };
-    });
-  } catch (error) {
-    console.error("OpenLibrary API error:", error);
-    return [];
+export function getCoverWithFallback(cover: string | undefined, isbn?: string): string {
+  if (isValidCover(cover)) {
+    return cover!;
   }
+  if (isbn) {
+    return getOpenLibraryCoverByISBN(isbn);
+  }
+  return ""; // Will show "No Cover" placeholder in UI
 }
 
 /**
