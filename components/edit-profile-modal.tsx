@@ -69,16 +69,22 @@ export function EditProfileModal({ isOpen, onClose }: EditProfileModalProps) {
   // Social links state
   const [socialLinks, setSocialLinks] = useState<SocialLink[]>(profile.socialLinks || []);
 
+  // Reset form data when modal opens - intentional state sync
   useEffect(() => {
     if (isOpen) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setFormData({
         name: profile.name,
         bio: profile.bio,
         profilePhoto: profile.profilePhoto,
       });
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setSelectedGenres(profile.favoriteGenres);
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setSocialLinks(profile.socialLinks || []);
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setCustomGenre("");
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setShowCustomGenre(false);
     }
   }, [isOpen, profile]);

@@ -106,22 +106,6 @@ export function PreviewDashboard() {
 
       {/* Preview Dashboard Card with Animated Neon Border */}
       <div className="relative p-[1px] rounded-2xl bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-700 shadow-[0_0_30px_rgba(37,99,235,0.5)] animate-gradient-border bg-[length:600%_600%]">
-        <style jsx>{`
-          @keyframes gradient-border {
-            0% {
-              background-position: 0% 50%;
-            }
-            50% {
-              background-position: 100% 50%;
-            }
-            100% {
-              background-position: 0% 50%;
-            }
-          }
-          .animate-gradient-border {
-            animation: gradient-border 2s ease infinite;
-          }
-        `}</style>
         <div
           className={`w-full rounded-2xl overflow-hidden`}
           style={{

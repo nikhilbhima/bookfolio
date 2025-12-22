@@ -10,8 +10,9 @@ export function InstallAppBanner() {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    // Check if mobile
+    // Check if mobile - runs once on mount
     const checkMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsMobile(checkMobile);
 
     if (!checkMobile) return;

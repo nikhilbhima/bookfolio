@@ -78,16 +78,18 @@ export function StarRating({
           prevStar?.focus();
         }
         break;
-      case 'Home':
+      case 'Home': {
         e.preventDefault();
         const firstStar = document.querySelector('[data-star="1"]') as HTMLElement;
         firstStar?.focus();
         break;
-      case 'End':
+      }
+      case 'End': {
         e.preventDefault();
         const lastStar = document.querySelector('[data-star="5"]') as HTMLElement;
         lastStar?.focus();
         break;
+      }
     }
   }, [readonly, onRatingChange]);
 

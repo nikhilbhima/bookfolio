@@ -16,6 +16,7 @@ export function BooksGrid() {
   const searchQuery = useBookStore((state) => state.searchQuery);
   const sortBy = useBookStore((state) => state.sortBy);
   const isLoading = useBookStore((state) => state.isLoading);
+  const getFilteredBooks = useBookStore((state) => state.getFilteredBooks);
   const [currentPage, setCurrentPage] = useState(1);
   const [isAddBookOpen, setIsAddBookOpen] = useState(false);
   const gridRef = useRef<HTMLDivElement>(null);
@@ -25,45 +26,8 @@ export function BooksGrid() {
   // Check if drag should be enabled
   const isDragEnabled = filter === "all" && !searchQuery && sortBy === "newest" && view === "grid";
 
-  // Compute filtered books
-  const filteredBooks = React.useMemo(() => {
-    let filtered = books;
-
-    if (filter !== "all") {
-      filtered = filtered.filter((book) => book.status === filter);
-    }
-
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase();
-      filtered = filtered.filter(
-        (book) =>
-          book.title.toLowerCase().includes(query) ||
-          book.author.toLowerCase().includes(query) ||
-          (book.genre && book.genre.toLowerCase().includes(query))
-      );
-    }
-
-    const sorted = [...filtered];
-    switch (sortBy) {
-      case "a-z":
-        sorted.sort((a, b) => a.title.localeCompare(b.title));
-        break;
-      case "z-a":
-        sorted.sort((a, b) => b.title.localeCompare(a.title));
-        break;
-      case "rating-high":
-        sorted.sort((a, b) => (b.rating || 0) - (a.rating || 0));
-        break;
-      case "rating-low":
-        sorted.sort((a, b) => (a.rating || 0) - (b.rating || 0));
-        break;
-      case "newest":
-      default:
-        break;
-    }
-
-    return sorted;
-  }, [books, filter, searchQuery, sortBy]);
+  // Use store's getFilteredBooks to avoid duplicate filtering logic
+  const filteredBooks = React.useMemo(() => getFilteredBooks(), [getFilteredBooks]);
 
   // Pagination
   const booksPerPage = 36;
