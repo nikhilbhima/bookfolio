@@ -27,10 +27,8 @@ export function InstallInstructionsModal({
     // Detect platform - runs once on mount
     const userAgent = navigator.userAgent.toLowerCase();
     if (/iphone|ipad|ipod/.test(userAgent)) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setPlatform("ios");
     } else if (/android/.test(userAgent)) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setPlatform("android");
     }
 

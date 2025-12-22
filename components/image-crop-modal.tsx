@@ -38,11 +38,8 @@ export function ImageCropModal({
   // Reset when modal opens - intentional state sync
   useEffect(() => {
     if (isOpen) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setZoom(1);
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setPosition({ x: 0, y: 0 });
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setImageLoaded(false);
     }
   }, [isOpen]);

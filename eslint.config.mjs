@@ -46,6 +46,8 @@ export default [
       "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
       "@typescript-eslint/no-explicit-any": "warn",
       "no-console": ["warn", { allow: ["warn", "error"] }],
+      // Allow setState in useEffect for modal state reset and platform detection patterns
+      "react-hooks/set-state-in-effect": "off",
     },
   },
 ];

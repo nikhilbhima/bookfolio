@@ -9,7 +9,7 @@ export default function ProfileNotFound() {
       <div className="flex flex-col items-center justify-center min-h-[60vh] px-4">
         <h1 className="text-4xl font-serif font-bold mb-4">Profile Not Found</h1>
         <p className="text-muted-foreground text-center mb-8 max-w-md">
-          The bookshelf you're looking for doesn't exist or may have been removed.
+          The bookshelf you&apos;re looking for doesn&apos;t exist or may have been removed.
         </p>
         <div className="flex gap-4">
           <Button asChild variant="outline">
