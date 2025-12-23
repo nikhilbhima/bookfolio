@@ -36,9 +36,10 @@ export function DashboardNav() {
 
           <button
             onClick={() => setIsShareModalOpen(true)}
-            className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 text-white text-sm font-medium hover:opacity-90 transition-opacity"
+            className="hidden sm:flex relative overflow-hidden items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500/20 to-pink-500/20 border border-blue-500/40 hover:border-blue-400/60 hover:scale-105 transition-all duration-300 text-sm font-semibold text-foreground dark:text-white"
           >
-            Share your Bookfolio
+            <span className="relative z-10">Share your Bookfolio</span>
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-500/20 to-blue-500/0 animate-shimmer" />
           </button>
           <Button
             variant="ghost"
