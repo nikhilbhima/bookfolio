@@ -109,7 +109,8 @@ export default function SignupPage() {
 
     try {
       // Store username in cookie to retrieve after OAuth callback
-      document.cookie = `pending_username=${username}; path=/; max-age=600; SameSite=Lax`;
+      const isSecure = window.location.protocol === 'https:';
+      document.cookie = `pending_username=${username}; path=/; max-age=600; SameSite=Lax${isSecure ? '; Secure' : ''}`;
 
       const supabase = createClient();
       const { error } = await supabase.auth.signInWithOAuth({

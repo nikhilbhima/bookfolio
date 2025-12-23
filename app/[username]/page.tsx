@@ -90,12 +90,12 @@ async function fetchPublicProfile(username: string): Promise<{ profile: UserProf
   }
 }
 
-// Cache the profile data for 60 seconds
-const getPublicProfile = unstable_cache(
-  fetchPublicProfile,
-  ["public-profile"],
+// Cache the profile data for 60 seconds - include username in cache key!
+const getPublicProfile = (username: string) => unstable_cache(
+  () => fetchPublicProfile(username),
+  ["public-profile", username],
   { revalidate: 60 }
-);
+)();
 
 export default async function PublicProfilePage({ params }: { params: Promise<{ username: string }> }) {
   const { username } = await params;

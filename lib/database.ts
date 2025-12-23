@@ -155,7 +155,8 @@ export async function getBooks(userId?: string) {
     .from('books')
     .select('*')
     .eq('user_id', userId)
-    .order('created_at', { ascending: false });
+    .order('created_at', { ascending: false })
+    .limit(500);
 
   if (error) {
     console.error('[GET BOOKS] Error:', error);
@@ -228,6 +229,12 @@ export async function createBook(book: Omit<Book, 'id'>, userId?: string) {
  * Update an existing book
  */
 export async function updateBook(id: string, updates: Partial<Book>) {
+  const userId = await getCurrentUserId();
+  if (!userId) {
+    console.error('[UPDATE BOOK] No authenticated user');
+    return null;
+  }
+
   const updateData: Record<string, string | number | undefined> = {};
   if (updates.title !== undefined) updateData.title = updates.title;
   if (updates.author !== undefined) updateData.author = updates.author;
@@ -241,6 +248,7 @@ export async function updateBook(id: string, updates: Partial<Book>) {
     .from('books')
     .update(updateData)
     .eq('id', id)
+    .eq('user_id', userId)
     .select()
     .single();
 
@@ -266,10 +274,17 @@ export async function updateBook(id: string, updates: Partial<Book>) {
  * Delete a book
  */
 export async function deleteBook(id: string) {
+  const userId = await getCurrentUserId();
+  if (!userId) {
+    console.error('[DELETE BOOK] No authenticated user');
+    return false;
+  }
+
   const { error } = await supabase
     .from('books')
     .delete()
-    .eq('id', id);
+    .eq('id', id)
+    .eq('user_id', userId);
 
   if (error) {
     console.error('[DELETE BOOK] Error:', error);
