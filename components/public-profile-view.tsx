@@ -6,7 +6,8 @@ import { Book, UserProfile } from "@/lib/mock-data";
 import { ProfileCard } from "./profile-card";
 import { BookCard } from "./book-card";
 import { PublicFiltersBar } from "./public-filters-bar";
-import { BookOpen, CheckCircle2, Clock, BookMarked } from "lucide-react";
+import { BookOpen, CheckCircle2, Clock, BookMarked, Grid3x3, List } from "lucide-react";
+import { Button } from "./ui/button";
 
 interface PublicProfileViewProps {
   profile: UserProfile;
@@ -17,6 +18,7 @@ export function PublicProfileView({ profile, books }: PublicProfileViewProps) {
   const [filter, setFilter] = useState<"all" | "reading" | "completed" | "to-read">("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState<"newest" | "a-z" | "z-a" | "rating-high" | "rating-low">("newest");
+  const [view, setView] = useState<"grid" | "list">("grid");
 
   // Calculate stats
   const totalBooks = books.length;
@@ -145,9 +147,35 @@ export function PublicProfileView({ profile, books }: PublicProfileViewProps) {
         <div className="max-w-7xl mx-auto space-y-4 sm:space-y-6">
           <div className="flex items-center justify-between">
             <h2 className="text-2xl sm:text-3xl font-serif font-bold">Book Collection</h2>
-            <p className="text-sm text-muted-foreground">
-              {filteredBooks.length} {filteredBooks.length === 1 ? "book" : "books"}
-            </p>
+            <div className="flex items-center gap-3">
+              <p className="text-sm text-muted-foreground hidden sm:block">
+                {filteredBooks.length} {filteredBooks.length === 1 ? "book" : "books"}
+              </p>
+              <div className="flex items-center gap-0.5 sm:gap-1 p-0.5 sm:p-1 bg-muted rounded-md sm:rounded-lg">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setView("grid")}
+                  className={`gap-1 sm:gap-2 px-2 sm:px-3 h-7 sm:h-9 ${
+                    view === "grid" ? "bg-background shadow-sm" : "hover:bg-background/50"
+                  }`}
+                >
+                  <Grid3x3 className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <span className="text-[10px] sm:text-sm">Grid</span>
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setView("list")}
+                  className={`gap-1 sm:gap-2 px-2 sm:px-3 h-7 sm:h-9 ${
+                    view === "list" ? "bg-background shadow-sm" : "hover:bg-background/50"
+                  }`}
+                >
+                  <List className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <span className="text-[10px] sm:text-sm">List</span>
+                </Button>
+              </div>
+            </div>
           </div>
 
           {/* Filters */}
@@ -173,9 +201,13 @@ export function PublicProfileView({ profile, books }: PublicProfileViewProps) {
               <p className="text-muted-foreground">No books found matching your filters</p>
             </div>
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8 gap-3 sm:gap-4 max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8">
+            <div className={
+              view === "grid"
+                ? "grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8 gap-3 sm:gap-4 max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8"
+                : "space-y-2 max-w-4xl mx-auto px-3 sm:px-0"
+            }>
               {filteredBooks.map((book) => (
-                <BookCard key={book.id} book={book} view="grid" isPublic />
+                <BookCard key={book.id} book={book} view={view} isPublic />
               ))}
             </div>
           )}
