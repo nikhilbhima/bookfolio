@@ -27,23 +27,24 @@ async function fetchPublicProfile(username: string): Promise<{ profile: UserProf
   }
 
   try {
-    // Fetch profile by username (case-insensitive)
+    // Fetch profile by username (use eq for indexed lookup, store lowercase)
     const { data: profileData, error: profileError } = await supabase
       .from("profiles")
-      .select("*")
-      .ilike("username", lowerUsername)
+      .select("user_id, username, name, bio, favorite_genres, profile_photo, social_links")
+      .eq("username", lowerUsername)
       .single();
 
     if (profileError || !profileData) {
       return null;
     }
 
-    // Fetch only needed columns for books
+    // Fetch books (uses user_id index)
     const { data: booksData } = await supabase
       .from("books")
       .select("id, title, author, cover, rating, status, notes, genre")
       .eq("user_id", profileData.user_id)
-      .order("created_at", { ascending: false });
+      .order("created_at", { ascending: false })
+      .limit(100);
 
     // Transform social links
     let socialLinks: SocialLink[] = [];
