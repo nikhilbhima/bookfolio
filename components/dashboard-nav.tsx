@@ -34,14 +34,19 @@ export function DashboardNav() {
             <span className="hidden sm:inline">Preview</span>
           </Button>
 
+          <button
+            onClick={() => setIsShareModalOpen(true)}
+            className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 text-white text-sm font-medium hover:opacity-90 transition-opacity"
+          >
+            Share your Bookfolio
+          </button>
           <Button
             variant="ghost"
             size="sm"
             onClick={() => setIsShareModalOpen(true)}
-            className="gap-2 px-2 sm:px-4"
+            className="sm:hidden px-2"
           >
             <Upload className="w-4 h-4" />
-            <span className="hidden sm:inline">Share your Bookfolio</span>
           </Button>
 
           <ThemeToggle />
