@@ -79,7 +79,10 @@ export function PublicProfileView({ profile, books }: PublicProfileViewProps) {
         {/* Stats Section */}
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-            <div className="relative p-2 sm:p-5 transition-all border border-blue-500/30 bg-blue-500/10 backdrop-blur-sm glow-blue-hover flex flex-col items-center md:items-start justify-center md:justify-start rounded-lg sm:rounded-2xl">
+            <div
+              onClick={() => setFilter("all")}
+              className={`relative p-2 sm:p-5 transition-all border border-blue-500/30 bg-blue-500/10 backdrop-blur-sm glow-blue-hover flex flex-col items-center md:items-start justify-center md:justify-start rounded-lg sm:rounded-2xl cursor-pointer hover:scale-[1.02] ${filter === "all" ? "ring-2 ring-blue-500/60 shadow-lg" : ""}`}
+            >
               <div className="flex flex-col md:flex-row items-center gap-1 sm:gap-3 w-full">
                 <div className="p-1 sm:p-2.5 rounded-md sm:rounded-xl bg-blue-500/10 border border-blue-500/30 shrink-0">
                   <BookOpen className="w-3 h-3 sm:w-5 sm:h-5 text-blue-400" />
@@ -91,7 +94,10 @@ export function PublicProfileView({ profile, books }: PublicProfileViewProps) {
               </div>
             </div>
 
-            <div className="relative p-2 sm:p-5 transition-all border border-amber-500/30 bg-amber-500/10 backdrop-blur-sm glow-amber-hover flex flex-col items-center md:items-start justify-center md:justify-start rounded-lg sm:rounded-2xl">
+            <div
+              onClick={() => setFilter("reading")}
+              className={`relative p-2 sm:p-5 transition-all border border-amber-500/30 bg-amber-500/10 backdrop-blur-sm glow-amber-hover flex flex-col items-center md:items-start justify-center md:justify-start rounded-lg sm:rounded-2xl cursor-pointer hover:scale-[1.02] ${filter === "reading" ? "ring-2 ring-amber-500/60 shadow-lg" : ""}`}
+            >
               <div className="flex flex-col md:flex-row items-center gap-1 sm:gap-3 w-full">
                 <div className="p-1 sm:p-2.5 rounded-md sm:rounded-xl bg-amber-500/10 border border-amber-500/30 shrink-0">
                   <BookMarked className="w-3 h-3 sm:w-5 sm:h-5 text-amber-400" />
@@ -103,7 +109,10 @@ export function PublicProfileView({ profile, books }: PublicProfileViewProps) {
               </div>
             </div>
 
-            <div className="relative p-2 sm:p-5 transition-all border border-emerald-500/30 bg-emerald-500/10 backdrop-blur-sm glow-emerald-hover flex flex-col items-center md:items-start justify-center md:justify-start rounded-lg sm:rounded-2xl">
+            <div
+              onClick={() => setFilter("completed")}
+              className={`relative p-2 sm:p-5 transition-all border border-emerald-500/30 bg-emerald-500/10 backdrop-blur-sm glow-emerald-hover flex flex-col items-center md:items-start justify-center md:justify-start rounded-lg sm:rounded-2xl cursor-pointer hover:scale-[1.02] ${filter === "completed" ? "ring-2 ring-emerald-500/60 shadow-lg" : ""}`}
+            >
               <div className="flex flex-col md:flex-row items-center gap-1 sm:gap-3 w-full">
                 <div className="p-1 sm:p-2.5 rounded-md sm:rounded-xl bg-emerald-500/10 border border-emerald-500/30 shrink-0">
                   <CheckCircle2 className="w-3 h-3 sm:w-5 sm:h-5 text-emerald-400" />
@@ -115,7 +124,10 @@ export function PublicProfileView({ profile, books }: PublicProfileViewProps) {
               </div>
             </div>
 
-            <div className="relative p-2 sm:p-5 transition-all border border-purple-500/30 bg-purple-500/10 backdrop-blur-sm glow-purple-hover flex flex-col items-center md:items-start justify-center md:justify-start rounded-lg sm:rounded-2xl">
+            <div
+              onClick={() => setFilter("to-read")}
+              className={`relative p-2 sm:p-5 transition-all border border-purple-500/30 bg-purple-500/10 backdrop-blur-sm glow-purple-hover flex flex-col items-center md:items-start justify-center md:justify-start rounded-lg sm:rounded-2xl cursor-pointer hover:scale-[1.02] ${filter === "to-read" ? "ring-2 ring-purple-500/60 shadow-lg" : ""}`}
+            >
               <div className="flex flex-col md:flex-row items-center gap-1 sm:gap-3 w-full">
                 <div className="p-1 sm:p-2.5 rounded-md sm:rounded-xl bg-purple-500/10 border border-purple-500/30 shrink-0">
                   <Clock className="w-3 h-3 sm:w-5 sm:h-5 text-purple-400" />
