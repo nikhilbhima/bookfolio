@@ -83,9 +83,9 @@ export function BookDetailsModal({
           </div>
 
           {/* Book Information */}
-          <div className="space-y-4 flex-1">
-            <div className="text-center sm:text-left">
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-serif font-bold mb-1">
+          <div className="space-y-4 flex-1 min-w-0">
+            <div className="text-center sm:text-left pr-8 sm:pr-0">
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-serif font-bold mb-1 break-words">
                 {book.title}
               </h2>
               <p className="text-base sm:text-lg text-muted-foreground">
