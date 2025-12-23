@@ -2,40 +2,44 @@
 
 **Your BookShelf, Beautifully Online.**
 
-A web app for tracking your reading history and sharing your book collection with the world.
+A modern web app for tracking your reading journey and sharing your book collection with the world.
 
-Live at [bookfolio.me](https://www.bookfolio.me)
+**Live at [bookfolio.me](https://www.bookfolio.me)**
+
+![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0-38B2AC?logo=tailwind-css)
+![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?logo=supabase)
 
 ## Features
 
-- Track books you've read, are reading, or want to read
-- Share your collection via a public profile page
-- Search millions of books using Google Books and OpenLibrary APIs
-- Organize books by genre, status, or rating
-- Drag and drop to reorder your book collection (desktop: click & drag, mobile: 1.5s hold & drag)
-- Dark and light theme support
-- Fully responsive mobile design
-- **Progressive Web App (PWA)** - Install on iOS and Android for app-like experience
-- Customizable user profiles with social links
+- **Track Your Books** - Organize books by reading status (reading, completed, to-read)
+- **Public Profiles** - Share your collection via a unique profile URL
+- **Smart Search** - Find books using Google Books and OpenLibrary APIs
+- **Drag & Drop** - Reorder your collection (desktop: click & drag, mobile: hold & drag)
+- **Dark/Light Mode** - Automatic theme switching with manual override
+- **PWA Support** - Install on iOS and Android for native app experience
+- **Responsive Design** - Works beautifully on all devices
 
 ## Tech Stack
 
-- Next.js 15 (App Router, Turbopack)
-- TypeScript
-- Tailwind CSS
-- Supabase (PostgreSQL + Auth)
-- Zustand for state management
-- Native HTML5 drag-and-drop with touch support
-- PWA with service worker and offline support
-- Deployed on Vercel
+| Category | Technology |
+|----------|------------|
+| Framework | Next.js 15 (App Router, Turbopack) |
+| Language | TypeScript |
+| Styling | Tailwind CSS 4 |
+| Database | Supabase (PostgreSQL) |
+| Auth | Supabase Auth |
+| State | Zustand |
+| Deployment | Vercel |
 
-## Setup
+## Quick Start
 
 ### Prerequisites
 
 - Node.js 18+
-- Supabase account
-- Google Books API key (optional)
+- Supabase account ([create one free](https://supabase.com))
+- Google Books API key (optional, for enhanced search)
 
 ### Installation
 
@@ -47,7 +51,7 @@ npm install
 
 ### Environment Variables
 
-Create `.env.local`:
+Create `.env.local` in the project root:
 
 ```env
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
@@ -56,9 +60,13 @@ SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 GOOGLE_BOOKS_API_KEY=your_google_books_api_key
 ```
 
-### Database Schema
+### Database Setup
 
-**profiles table:**
+Create these tables in your Supabase dashboard:
+
+<details>
+<summary>profiles table</summary>
+
 ```sql
 create table profiles (
   id uuid primary key default uuid_generate_v4(),
@@ -72,8 +80,11 @@ create table profiles (
   created_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
 ```
+</details>
 
-**books table:**
+<details>
+<summary>books table</summary>
+
 ```sql
 create table books (
   id uuid primary key default uuid_generate_v4(),
@@ -92,6 +103,7 @@ create table books (
   created_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
 ```
+</details>
 
 ### Run Development Server
 
@@ -101,39 +113,37 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000)
 
-## Build
-
-```bash
-npm run build
-```
-
 ## Project Structure
 
 ```
 bookfolio/
-├── app/                    # Next.js pages and routes
+├── app/                    # Next.js App Router pages
 │   ├── api/               # API endpoints
-│   ├── dashboard/         # Dashboard page
-│   ├── login/            # Authentication pages
-│   └── [username]/       # Public profile pages
+│   ├── dashboard/         # User dashboard
+│   ├── login/             # Authentication
+│   └── [username]/        # Public profile pages (SSR)
 ├── components/            # React components
-├── lib/                   # Database and utilities
+├── lib/                   # Database, store, utilities
 └── public/               # Static assets
 ```
 
+## Contributing
+
+We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for ways to help.
+
 ## Security
 
-- Row Level Security enabled in Supabase
+- Row Level Security (RLS) enabled in Supabase
 - Server-side authentication checks
 - Environment variables for sensitive data
-- HTTPS in production
+- HTTPS enforced in production
+
+## License
+
+MIT License - feel free to use this project for learning or building your own book tracking app.
 
 ## Author
 
-Nikhil Bhima
+**Nikhil Bhima**
 - [Twitter/X](https://x.com/nikhilbhima)
 - [GitHub](https://github.com/nikhilbhima)
-
-## Contributing
-
-Contributions and feature requests welcome. Open an issue or submit a PR.
