@@ -22,7 +22,7 @@ export const SOCIAL_PLATFORMS: SocialPlatform[] = [
     label: "X (Twitter)",
     icon: XIcon,
     inputType: "username",
-    placeholder: "username",
+    placeholder: "username or URL",
     baseUrl: "https://x.com/",
   },
   {
@@ -30,7 +30,7 @@ export const SOCIAL_PLATFORMS: SocialPlatform[] = [
     label: "Instagram",
     icon: Instagram,
     inputType: "username",
-    placeholder: "username",
+    placeholder: "username or URL",
     baseUrl: "https://instagram.com/",
   },
   {
@@ -46,7 +46,8 @@ export const SOCIAL_PLATFORMS: SocialPlatform[] = [
     label: "Medium",
     icon: MediumIcon,
     inputType: "url",
-    placeholder: "https://medium.com/@username or https://username.medium.com",
+    placeholder: "username or full URL",
+    baseUrl: "https://medium.com/@",
     urlPattern: /^https?:\/\/([\w-]+\.)?medium\.com/,
   },
   {
@@ -54,7 +55,8 @@ export const SOCIAL_PLATFORMS: SocialPlatform[] = [
     label: "Are.na",
     icon: ArenaIcon,
     inputType: "url",
-    placeholder: "https://are.na/username",
+    placeholder: "username or full URL",
+    baseUrl: "https://are.na/",
     urlPattern: /^https?:\/\/(www\.)?are\.na\//,
   },
   {
@@ -70,7 +72,7 @@ export const SOCIAL_PLATFORMS: SocialPlatform[] = [
     label: "Pinterest",
     icon: PinterestIcon,
     inputType: "username",
-    placeholder: "username",
+    placeholder: "username or URL",
     baseUrl: "https://pinterest.com/",
   },
   {
@@ -78,7 +80,7 @@ export const SOCIAL_PLATFORMS: SocialPlatform[] = [
     label: "GitHub",
     icon: Github,
     inputType: "username",
-    placeholder: "username",
+    placeholder: "username or URL",
     baseUrl: "https://github.com/",
   },
   {
@@ -124,17 +126,26 @@ export function buildSocialUrl(platform: SocialPlatform, value: string): string 
 
   if (!trimmedValue) return "";
 
-  if (platform.inputType === "username" && platform.baseUrl) {
+  // If value is already a full URL, return it as-is (works for any platform)
+  if (trimmedValue.startsWith("http://") || trimmedValue.startsWith("https://")) {
+    return trimmedValue;
+  }
+
+  // Handle email
+  if (platform.inputType === "email") {
+    // Remove mailto: if user included it
+    const cleanEmail = trimmedValue.replace(/^mailto:/i, "");
+    return `mailto:${cleanEmail}`;
+  }
+
+  // If platform has a baseUrl, build the full URL from username
+  if (platform.baseUrl) {
     // Remove @ symbol and slashes if user included them
     const cleanUsername = trimmedValue.replace(/^@/, "").replace(/^\/+|\/+$/g, "");
     return `${platform.baseUrl}${cleanUsername}`;
   }
 
-  if (platform.inputType === "email") {
-    return `mailto:${trimmedValue}`;
-  }
-
-  // For URL types, return as-is (already validated)
+  // Fallback: return as-is
   return trimmedValue;
 }
 
