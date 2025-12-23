@@ -6,7 +6,11 @@ export function SubstackIcon({ className }: { className?: string }) {
       fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24l9.54-5.573L20.539 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z" />
+      {/* Two horizontal bars at top */}
+      <rect x="3" y="3" width="18" height="2.5" rx="0.5" />
+      <rect x="3" y="7.5" width="18" height="2.5" rx="0.5" />
+      {/* Bookmark/ribbon with V notch */}
+      <path d="M3 12h18v9.5l-9-5.25-9 5.25V12z" />
     </svg>
   );
 }
