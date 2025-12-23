@@ -41,7 +41,7 @@ export function DashboardNav() {
             className="gap-2 px-2 sm:px-4"
           >
             <Upload className="w-4 h-4" />
-            <span className="hidden sm:inline">Share</span>
+            <span className="hidden sm:inline">Share your Bookfolio</span>
           </Button>
 
           <ThemeToggle />

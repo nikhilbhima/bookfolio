@@ -105,7 +105,7 @@ export default function TermsPage() {
 
             <section>
               <p className="text-sm">
-                <strong>Last updated:</strong> November 2025
+                <strong>Last updated:</strong> December 2025
               </p>
             </section>
           </div>
