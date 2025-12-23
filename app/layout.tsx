@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Instrument_Serif } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
@@ -89,6 +90,7 @@ export default function RootLayout({
           </main>
           <Toaster />
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
