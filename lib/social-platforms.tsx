@@ -2,6 +2,8 @@ import { Instagram, Linkedin, Mail, Globe, Github, Youtube, Music2 } from "lucid
 import { XIcon } from "@/components/icons/x-icon";
 import { MediumIcon } from "@/components/icons/medium-icon";
 import { ArenaIcon } from "@/components/icons/arena-icon";
+import { SubstackIcon } from "@/components/icons/substack-icon";
+import { PinterestIcon } from "@/components/icons/pinterest-icon";
 
 export interface SocialPlatform {
   id: string;
@@ -54,6 +56,22 @@ export const SOCIAL_PLATFORMS: SocialPlatform[] = [
     inputType: "username",
     placeholder: "username",
     baseUrl: "https://are.na/",
+  },
+  {
+    id: "substack",
+    label: "Substack",
+    icon: SubstackIcon,
+    inputType: "url",
+    placeholder: "https://yourname.substack.com",
+    urlPattern: /^https?:\/\/[\w-]+\.substack\.com/,
+  },
+  {
+    id: "pinterest",
+    label: "Pinterest",
+    icon: PinterestIcon,
+    inputType: "username",
+    placeholder: "username",
+    baseUrl: "https://pinterest.com/",
   },
   {
     id: "github",
