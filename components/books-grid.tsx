@@ -26,11 +26,8 @@ export function BooksGrid() {
   // Check if drag should be enabled
   const isDragEnabled = filter === "all" && !searchQuery && sortBy === "newest" && view === "grid";
 
-  // Use store's getFilteredBooks - depend on filter state to trigger re-render
-  const filteredBooks = React.useMemo(
-    () => getFilteredBooks(),
-    [getFilteredBooks, books, filter, searchQuery, sortBy]
-  );
+  // Get filtered books - called on every render when filter state changes
+  const filteredBooks = getFilteredBooks();
 
   // Pagination
   const booksPerPage = 36;
