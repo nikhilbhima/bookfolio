@@ -1,5 +1,7 @@
-import { Instagram, Linkedin, Mail, Globe, BookOpen, Github, Youtube, Music2 } from "lucide-react";
+import { Instagram, Linkedin, Mail, Globe, Github, Youtube, Music2 } from "lucide-react";
 import { XIcon } from "@/components/icons/x-icon";
+import { MediumIcon } from "@/components/icons/medium-icon";
+import { ArenaIcon } from "@/components/icons/arena-icon";
 
 export interface SocialPlatform {
   id: string;
@@ -38,12 +40,20 @@ export const SOCIAL_PLATFORMS: SocialPlatform[] = [
     urlPattern: /^https?:\/\/(www\.)?linkedin\.com\//,
   },
   {
-    id: "goodreads",
-    label: "Goodreads",
-    icon: BookOpen,
+    id: "medium",
+    label: "Medium",
+    icon: MediumIcon,
     inputType: "username",
     placeholder: "username",
-    baseUrl: "https://goodreads.com/",
+    baseUrl: "https://medium.com/@",
+  },
+  {
+    id: "arena",
+    label: "Are.na",
+    icon: ArenaIcon,
+    inputType: "username",
+    placeholder: "username",
+    baseUrl: "https://are.na/",
   },
   {
     id: "github",
