@@ -6,7 +6,9 @@ export function ArenaIcon({ className }: { className?: string }) {
       fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path d="M3 3h18v18H3V3zm2 2v14h14V5H5zm2 2h10v10H7V7zm2 2v6h6V9H9z" />
+      {/* Two 6-pointed asterisk stars - Are.na logo */}
+      <path d="M7 12L7 5M7 12L7 19M7 12L1.5 8.5M7 12L12.5 8.5M7 12L1.5 15.5M7 12L12.5 15.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" />
+      <path d="M17 12L17 5M17 12L17 19M17 12L11.5 8.5M17 12L22.5 8.5M17 12L11.5 15.5M17 12L22.5 15.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" />
     </svg>
   );
 }
