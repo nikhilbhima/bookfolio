@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { unstable_cache } from "next/cache";
 import { supabase } from "@/lib/supabase";
 import { PublicProfileView } from "@/components/public-profile-view";
 import { PublicNav } from "@/components/public-nav";
@@ -18,7 +19,7 @@ interface SupabaseBook {
   genre?: string;
 }
 
-async function getPublicProfile(username: string): Promise<{ profile: UserProfile; books: Book[] } | null> {
+async function fetchPublicProfile(username: string): Promise<{ profile: UserProfile; books: Book[] } | null> {
   const lowerUsername = username.toLowerCase();
 
   if (!usernameRegex.test(lowerUsername)) {
@@ -37,10 +38,10 @@ async function getPublicProfile(username: string): Promise<{ profile: UserProfil
       return null;
     }
 
-    // Fetch books for this user
+    // Fetch only needed columns for books
     const { data: booksData } = await supabase
       .from("books")
-      .select("*")
+      .select("id, title, author, cover, rating, status, notes, genre")
       .eq("user_id", profileData.user_id)
       .order("created_at", { ascending: false });
 
@@ -87,6 +88,13 @@ async function getPublicProfile(username: string): Promise<{ profile: UserProfil
     return null;
   }
 }
+
+// Cache the profile data for 60 seconds
+const getPublicProfile = unstable_cache(
+  fetchPublicProfile,
+  ["public-profile"],
+  { revalidate: 60 }
+);
 
 export default async function PublicProfilePage({ params }: { params: Promise<{ username: string }> }) {
   const { username } = await params;
