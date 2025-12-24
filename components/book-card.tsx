@@ -121,7 +121,7 @@ export function BookCard({ book, view, isPublic = false, isMoveMode = false }: B
               </div>
             )}
 
-            {isHovered && (
+            {isHovered && !isPublic && (
               <div className="flex-shrink-0 flex items-center gap-1 sm:gap-2">
                 <button
                   onClick={() => setIsEditOpen(true)}
