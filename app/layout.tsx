@@ -28,8 +28,8 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Bookfolio - Your Bookshelf, Beautifully Online",
-  description: "Track your reading journey, organize your book collection, and share your bookshelf with the world. A beautiful, free alternative to Goodreads.",
+  title: "Bookfolio - Track, Organize & Share Your Book Collection Online",
+  description: "Track your reading journey, organize your book collection, and share your beautiful bookshelf with the world. A free, modern alternative to Goodreads with personalized profiles.",
   keywords: ["book tracking", "reading tracker", "bookshelf", "book collection", "reading list", "book reviews", "goodreads alternative", "reading journal", "book organizer"],
   metadataBase: new URL('https://bookfolio.me'),
   manifest: '/manifest.json',
@@ -52,18 +52,27 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: "Bookfolio - Your Bookshelf, Beautifully Online",
-    description: "Track your reading journey, organize your book collection, and share your bookshelf with the world. A beautiful, free alternative to Goodreads.",
+    title: "Bookfolio - Track, Organize & Share Your Book Collection Online",
+    description: "Track your reading journey, organize your book collection, and share your beautiful bookshelf with the world. A free, modern alternative to Goodreads with personalized profiles.",
     url: 'https://bookfolio.me',
     siteName: 'Bookfolio',
     locale: 'en_US',
     type: 'website',
+    images: [
+      {
+        url: '/opengraph-image',
+        width: 1200,
+        height: 630,
+        alt: 'Bookfolio - Your Bookshelf, Beautifully Online',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Bookfolio - Your Bookshelf, Beautifully Online",
-    description: "Track your reading journey, organize your book collection, and share your bookshelf with the world.",
+    title: "Bookfolio - Track, Organize & Share Your Book Collection Online",
+    description: "Track your reading journey, organize your book collection, and share your beautiful bookshelf with the world. A free, modern alternative to Goodreads.",
     creator: '@nikhilbhima',
+    images: ['/twitter-image'],
   },
   alternates: {
     canonical: 'https://bookfolio.me',
