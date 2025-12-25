@@ -29,7 +29,8 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: "Bookfolio - Your Bookshelf, Beautifully Online",
-  description: "Track your reading. Share your journey with the community.",
+  description: "Track your reading journey, organize your book collection, and share your bookshelf with the world. A beautiful, free alternative to Goodreads.",
+  keywords: ["book tracking", "reading tracker", "bookshelf", "book collection", "reading list", "book reviews", "goodreads alternative", "reading journal", "book organizer"],
   metadataBase: new URL('https://bookfolio.me'),
   manifest: '/manifest.json',
   appleWebApp: {
@@ -38,6 +39,9 @@ export const metadata: Metadata = {
     title: 'Bookfolio',
   },
   applicationName: 'Bookfolio',
+  authors: [{ name: 'Bookfolio' }],
+  creator: 'Bookfolio',
+  publisher: 'Bookfolio',
   icons: {
     icon: [
       { url: '/icon-192x192.png', sizes: '192x192', type: 'image/png' },
@@ -49,7 +53,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Bookfolio - Your Bookshelf, Beautifully Online",
-    description: "Track your reading. Share your journey with the community.",
+    description: "Track your reading journey, organize your book collection, and share your bookshelf with the world. A beautiful, free alternative to Goodreads.",
     url: 'https://bookfolio.me',
     siteName: 'Bookfolio',
     locale: 'en_US',
@@ -58,7 +62,11 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: "Bookfolio - Your Bookshelf, Beautifully Online",
-    description: "Track your reading. Share your journey with the community.",
+    description: "Track your reading journey, organize your book collection, and share your bookshelf with the world.",
+    creator: '@nikhilbhima',
+  },
+  alternates: {
+    canonical: 'https://bookfolio.me',
   },
 };
 

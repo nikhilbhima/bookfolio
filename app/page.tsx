@@ -3,12 +3,35 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Script from "next/script";
 import { Logo } from "@/components/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { PreviewMobile } from "@/components/preview-mobile";
 import { createClient } from "@/lib/supabase";
 import { BookOpen, Share2, Sparkles, ArrowRight, ChevronDown } from "lucide-react";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Bookfolio",
+  "url": "https://bookfolio.me",
+  "description": "Track your reading journey, organize your book collection, and share your bookshelf with the world. A beautiful, free alternative to Goodreads.",
+  "applicationCategory": "LifestyleApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "featureList": [
+    "Track books you're reading, completed, or want to read",
+    "Rate and review books",
+    "Share your bookshelf with a personalized public profile",
+    "Works offline as a Progressive Web App",
+    "Dark and light mode support"
+  ]
+};
 
 export default function LandingPage() {
   const router = useRouter();
@@ -37,6 +60,11 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
+      <Script
+        id="json-ld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
         <div className="container mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
