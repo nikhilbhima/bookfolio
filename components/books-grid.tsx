@@ -294,6 +294,7 @@ export function BooksGrid() {
                   book={book}
                   view={view}
                   isMoveMode={movingBookId === book.id}
+                  priority={index < 8}
                 />
               </div>
             ))}

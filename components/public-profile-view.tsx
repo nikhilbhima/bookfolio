@@ -206,8 +206,8 @@ export function PublicProfileView({ profile, books }: PublicProfileViewProps) {
                 ? "grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8 gap-3 sm:gap-4 max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8"
                 : "space-y-2 max-w-4xl mx-auto px-3 sm:px-0"
             }>
-              {filteredBooks.map((book) => (
-                <BookCard key={book.id} book={book} view={view} isPublic />
+              {filteredBooks.map((book, index) => (
+                <BookCard key={book.id} book={book} view={view} isPublic priority={index < 8} />
               ))}
             </div>
           )}

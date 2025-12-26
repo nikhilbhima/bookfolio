@@ -17,9 +17,10 @@ interface BookCardProps {
   view: "grid" | "list";
   isPublic?: boolean;
   isMoveMode?: boolean;
+  priority?: boolean;
 }
 
-export function BookCard({ book, view, isPublic = false, isMoveMode = false }: BookCardProps) {
+export function BookCard({ book, view, isPublic = false, isMoveMode = false, priority = false }: BookCardProps) {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
@@ -80,9 +81,10 @@ export function BookCard({ book, view, isPublic = false, isMoveMode = false }: B
                   src={book.cover}
                   alt={book.title}
                   fill
+                  sizes="64px"
                   className="object-cover"
                   onError={() => setImageError(true)}
-                  unoptimized
+                  priority={priority}
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-[10px] sm:text-xs text-muted-foreground">
@@ -221,9 +223,10 @@ export function BookCard({ book, view, isPublic = false, isMoveMode = false }: B
               src={book.cover}
               alt={book.title}
               fill
+              sizes="(max-width: 640px) 50vw, (max-width: 768px) 25vw, (max-width: 1024px) 20vw, (max-width: 1280px) 16vw, (max-width: 1536px) 14vw, 12vw"
               className="object-cover"
               onError={() => setImageError(true)}
-              unoptimized
+              priority={priority}
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-muted-foreground">
