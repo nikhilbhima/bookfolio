@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { PREVIEW_BOOKS, PREVIEW_PROFILE } from "@/lib/preview-data";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Moon, Sun, BookOpen, BookMarked, CheckCircle2, Clock, Instagram, Search } from "lucide-react";
+import { Moon, Sun, BookOpen, BookMarked, CheckCircle2, Clock, Instagram, Search, Grid3x3, List } from "lucide-react";
 import { StarRating } from "@/components/star-rating";
 import { XIcon } from "@/components/icons/x-icon";
 import Image from "next/image";
@@ -14,6 +14,7 @@ type BookStatus = "all" | "reading" | "completed" | "to-read";
 export function PreviewMobile() {
   const [filter, setFilter] = useState<BookStatus>("all");
   const [previewTheme, setPreviewTheme] = useState<"light" | "dark">("dark");
+  const [view, setView] = useState<"grid" | "list">("grid");
 
   // Convert preview books to match Book type format
   const convertedBooks = PREVIEW_BOOKS.map((book) => ({
@@ -135,10 +136,13 @@ export function PreviewMobile() {
           </div>
         </div>
 
-        {/* Stats Section - exact copy from public-profile-view.tsx */}
+        {/* Stats Section - clickable to filter */}
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-2 gap-3">
-            <div className="relative p-2 transition-all border border-blue-500/30 bg-blue-500/10 backdrop-blur-sm glow-blue-hover flex flex-col items-center justify-center rounded-lg">
+            <button
+              onClick={() => setFilter("all")}
+              className={`relative p-2 transition-all border border-blue-500/30 bg-blue-500/10 backdrop-blur-sm glow-blue-hover flex flex-col items-center justify-center rounded-lg cursor-pointer ${filter === "all" ? "ring-2 ring-blue-500 ring-offset-1 ring-offset-background" : ""}`}
+            >
               <div className="flex flex-col items-center gap-1 w-full">
                 <div className="p-1 rounded-md bg-blue-500/10 border border-blue-500/30 shrink-0">
                   <BookOpen className="w-3 h-3 text-blue-400" />
@@ -148,9 +152,12 @@ export function PreviewMobile() {
                   <p className="text-[9px] text-muted-foreground mt-0">All Books</p>
                 </div>
               </div>
-            </div>
+            </button>
 
-            <div className="relative p-2 transition-all border border-amber-500/30 bg-amber-500/10 backdrop-blur-sm glow-amber-hover flex flex-col items-center justify-center rounded-lg">
+            <button
+              onClick={() => setFilter("reading")}
+              className={`relative p-2 transition-all border border-amber-500/30 bg-amber-500/10 backdrop-blur-sm glow-amber-hover flex flex-col items-center justify-center rounded-lg cursor-pointer ${filter === "reading" ? "ring-2 ring-amber-500 ring-offset-1 ring-offset-background" : ""}`}
+            >
               <div className="flex flex-col items-center gap-1 w-full">
                 <div className="p-1 rounded-md bg-amber-500/10 border border-amber-500/30 shrink-0">
                   <BookMarked className="w-3 h-3 text-amber-400" />
@@ -160,9 +167,12 @@ export function PreviewMobile() {
                   <p className="text-[9px] text-muted-foreground mt-0">Currently Reading</p>
                 </div>
               </div>
-            </div>
+            </button>
 
-            <div className="relative p-2 transition-all border border-emerald-500/30 bg-emerald-500/10 backdrop-blur-sm glow-emerald-hover flex flex-col items-center justify-center rounded-lg">
+            <button
+              onClick={() => setFilter("completed")}
+              className={`relative p-2 transition-all border border-emerald-500/30 bg-emerald-500/10 backdrop-blur-sm glow-emerald-hover flex flex-col items-center justify-center rounded-lg cursor-pointer ${filter === "completed" ? "ring-2 ring-emerald-500 ring-offset-1 ring-offset-background" : ""}`}
+            >
               <div className="flex flex-col items-center gap-1 w-full">
                 <div className="p-1 rounded-md bg-emerald-500/10 border border-emerald-500/30 shrink-0">
                   <CheckCircle2 className="w-3 h-3 text-emerald-400" />
@@ -172,9 +182,12 @@ export function PreviewMobile() {
                   <p className="text-[9px] text-muted-foreground mt-0">Completed</p>
                 </div>
               </div>
-            </div>
+            </button>
 
-            <div className="relative p-2 transition-all border border-purple-500/30 bg-purple-500/10 backdrop-blur-sm glow-purple-hover flex flex-col items-center justify-center rounded-lg">
+            <button
+              onClick={() => setFilter("to-read")}
+              className={`relative p-2 transition-all border border-purple-500/30 bg-purple-500/10 backdrop-blur-sm glow-purple-hover flex flex-col items-center justify-center rounded-lg cursor-pointer ${filter === "to-read" ? "ring-2 ring-purple-500 ring-offset-1 ring-offset-background" : ""}`}
+            >
               <div className="flex flex-col items-center gap-1 w-full">
                 <div className="p-1 rounded-md bg-purple-500/10 border border-purple-500/30 shrink-0">
                   <Clock className="w-3 h-3 text-purple-400" />
@@ -184,7 +197,7 @@ export function PreviewMobile() {
                   <p className="text-[9px] text-muted-foreground mt-0">To Read</p>
                 </div>
               </div>
-            </div>
+            </button>
           </div>
         </div>
 
@@ -243,46 +256,102 @@ export function PreviewMobile() {
               </button>
             </div>
 
-            {/* Search */}
-            <div className="relative">
-              <Search className={`absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 ${previewTheme === "dark" ? "text-zinc-400" : "text-zinc-500"}`} />
-              <input
-                placeholder="Search books..."
-                className={`w-full pl-8 h-8 text-xs rounded-md border ${previewTheme === "dark" ? "bg-zinc-900 border-zinc-700 placeholder:text-zinc-500" : "bg-white border-zinc-200 placeholder:text-zinc-400"}`}
-                readOnly
-              />
+            {/* Search + View Toggle */}
+            <div className="flex items-center gap-2">
+              <div className="relative flex-1">
+                <Search className={`absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 ${previewTheme === "dark" ? "text-zinc-400" : "text-zinc-500"}`} />
+                <input
+                  placeholder="Search books..."
+                  className={`w-full pl-8 h-8 text-xs rounded-md border ${previewTheme === "dark" ? "bg-zinc-900 border-zinc-700 placeholder:text-zinc-500" : "bg-white border-zinc-200 placeholder:text-zinc-400"}`}
+                  readOnly
+                />
+              </div>
+              {/* View Toggle */}
+              <div className={`flex items-center gap-0.5 p-0.5 rounded-md ${previewTheme === "dark" ? "bg-zinc-800" : "bg-zinc-100"}`}>
+                <button
+                  onClick={() => setView("grid")}
+                  className={`p-1.5 rounded transition-colors ${
+                    view === "grid"
+                      ? previewTheme === "dark" ? "bg-zinc-700 shadow-sm" : "bg-white shadow-sm"
+                      : previewTheme === "dark" ? "hover:bg-zinc-700/50" : "hover:bg-zinc-200/50"
+                  }`}
+                >
+                  <Grid3x3 className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  onClick={() => setView("list")}
+                  className={`p-1.5 rounded transition-colors ${
+                    view === "list"
+                      ? previewTheme === "dark" ? "bg-zinc-700 shadow-sm" : "bg-white shadow-sm"
+                      : previewTheme === "dark" ? "hover:bg-zinc-700/50" : "hover:bg-zinc-200/50"
+                  }`}
+                >
+                  <List className="w-3.5 h-3.5" />
+                </button>
+              </div>
             </div>
           </div>
 
-          {/* Books Grid - exact grid from public-profile-view.tsx mobile (grid-cols-2) */}
-          <div className="grid grid-cols-2 gap-3">
-            {filteredBooks.slice(0, 6).map((book) => (
-              <div key={book.id} className={`group relative overflow-hidden transition-all duration-300 hover:shadow-lg rounded-lg border ${previewTheme === "dark" ? "bg-zinc-900 border-zinc-800" : "bg-white border-zinc-200"}`}>
-                <div className={`relative aspect-[2/3] cursor-pointer overflow-hidden rounded-t-lg ${previewTheme === "dark" ? "bg-zinc-800" : "bg-zinc-100"}`}>
-                  <Image
-                    src={book.cover}
-                    alt={book.title}
-                    fill
-                    className="object-cover"
-                    unoptimized
-                  />
+          {/* Books Display - Grid or List */}
+          {view === "grid" ? (
+            <div className="grid grid-cols-2 gap-3">
+              {filteredBooks.slice(0, 6).map((book) => (
+                <div key={book.id} className={`group relative overflow-hidden transition-all duration-300 hover:shadow-lg rounded-lg border ${previewTheme === "dark" ? "bg-zinc-900 border-zinc-800" : "bg-white border-zinc-200"}`}>
+                  <div className={`relative aspect-[2/3] cursor-pointer overflow-hidden rounded-t-lg ${previewTheme === "dark" ? "bg-zinc-800" : "bg-zinc-100"}`}>
+                    <Image
+                      src={book.cover}
+                      alt={book.title}
+                      fill
+                      className="object-cover"
+                      unoptimized
+                    />
+                  </div>
+                  <div className="p-2.5">
+                    <h3 className="font-semibold text-[11px] truncate leading-tight" title={book.title}>
+                      {book.title}
+                    </h3>
+                    <p className={`text-[10px] truncate mt-0.5 ${previewTheme === "dark" ? "text-zinc-400" : "text-zinc-500"}`} title={book.author}>
+                      {book.author}
+                    </p>
+                    {book.rating > 0 && (
+                      <div className="mt-1.5">
+                        <StarRating rating={book.rating} readonly size="sm" />
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <div className="p-2.5">
-                  <h3 className="font-semibold text-[11px] truncate leading-tight" title={book.title}>
-                    {book.title}
-                  </h3>
-                  <p className={`text-[10px] truncate mt-0.5 ${previewTheme === "dark" ? "text-zinc-400" : "text-zinc-500"}`} title={book.author}>
-                    {book.author}
-                  </p>
-                  {book.rating > 0 && (
-                    <div className="mt-1.5">
-                      <StarRating rating={book.rating} readonly size="sm" />
-                    </div>
-                  )}
+              ))}
+            </div>
+          ) : (
+            <div className="space-y-2">
+              {filteredBooks.slice(0, 6).map((book) => (
+                <div key={book.id} className={`flex gap-3 p-2.5 rounded-lg border transition-all duration-300 hover:shadow-md ${previewTheme === "dark" ? "bg-zinc-900 border-zinc-800" : "bg-white border-zinc-200"}`}>
+                  <div className={`relative w-12 h-[72px] shrink-0 rounded overflow-hidden ${previewTheme === "dark" ? "bg-zinc-800" : "bg-zinc-100"}`}>
+                    <Image
+                      src={book.cover}
+                      alt={book.title}
+                      fill
+                      className="object-cover"
+                      unoptimized
+                    />
+                  </div>
+                  <div className="flex-1 min-w-0 flex flex-col justify-center">
+                    <h3 className="font-semibold text-[11px] truncate leading-tight" title={book.title}>
+                      {book.title}
+                    </h3>
+                    <p className={`text-[10px] truncate mt-0.5 ${previewTheme === "dark" ? "text-zinc-400" : "text-zinc-500"}`} title={book.author}>
+                      {book.author}
+                    </p>
+                    {book.rating > 0 && (
+                      <div className="mt-1">
+                        <StarRating rating={book.rating} readonly size="sm" />
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
 
           {/* CTA Button - exact copy from public-profile-view.tsx */}
           <div className="flex justify-center pt-8 pb-4">

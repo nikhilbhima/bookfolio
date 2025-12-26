@@ -9,7 +9,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { PreviewMobile } from "@/components/preview-mobile";
 import { createClient } from "@/lib/supabase";
-import { BookOpen, Share2, Sparkles, ArrowRight, ChevronDown } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -49,389 +49,328 @@ export default function LandingPage() {
 
     checkAuth();
 
-    // Trigger entrance animations
-    const timer = setTimeout(() => setIsVisible(true), 100);
+    const timer = setTimeout(() => setIsVisible(true), 50);
     return () => clearTimeout(timer);
   }, [router]);
 
-  const scrollToPreview = () => {
-    document.getElementById('preview-section')?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className="min-h-screen flex flex-col bg-background noise-overlay">
       <Script
         id="json-ld"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
-        <div className="container mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-          <Logo />
 
-          <div className="flex items-center gap-2 md:gap-3">
-            <ThemeToggle />
+      {/* Navigation */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-md border-b border-subtle">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+          <Logo />
+          <div className="flex items-center gap-2 sm:gap-3">
             <Link href="/login">
-              <Button variant="ghost" size="sm" className="text-sm font-medium">
-                Login
+              <Button variant="ghost" size="sm" className="text-xs sm:text-sm px-2 sm:px-3 text-muted-foreground hover:text-foreground">
+                Log in
               </Button>
             </Link>
             <Link href="/signup">
-              <Button size="sm" className="text-sm font-medium">
-                <span className="hidden sm:inline">Get Started</span>
-                <span className="sm:hidden">Sign Up</span>
+              <Button size="sm" className="text-xs sm:text-sm px-3 sm:px-4 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white font-medium border-0">
+                Sign up
               </Button>
             </Link>
+            <ThemeToggle />
           </div>
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="relative min-h-[85vh] sm:min-h-[90vh] flex flex-col items-center justify-center pt-36 sm:pt-32 pb-8 sm:pb-12 overflow-hidden">
-        {/* Colorful Gradient Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/60 via-blue-50/30 to-blue-50/60 dark:from-blue-950/30 dark:via-blue-950/20 dark:to-blue-950/30" />
+      {/* Hero */}
+      <section className="relative min-h-[90vh] flex items-center pt-14">
+        {/* Subtle ambient glow */}
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-blue-500/[0.04] dark:bg-blue-500/[0.07] rounded-full blur-[120px] pointer-events-none" />
 
-        {/* Animated Gradient Blobs */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 -left-20 w-72 h-72 bg-blue-500/20 dark:bg-blue-500/15 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute top-40 -right-20 w-96 h-96 bg-blue-500/15 dark:bg-blue-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-          <div className="absolute -bottom-20 left-1/3 w-80 h-80 bg-blue-500/15 dark:bg-blue-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
-        </div>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full">
+          <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-20 items-center">
+            {/* Left: Copy */}
+            <div className="space-y-6 sm:space-y-8">
+              <div
+                className={`transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`}
+              >
+                <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 dark:bg-blue-500/15 border border-blue-500/20 dark:border-blue-400/20 text-[11px] font-medium tracking-wide uppercase text-foreground/80">
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-60 animate-[ping_2s_cubic-bezier(0,0,0.2,1)_infinite]"></span>
+                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-blue-500"></span>
+                  </span>
+                  Free to use
+                </span>
+              </div>
 
-        {/* Floating Book Spines - Decorative */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -left-4 top-1/4 w-3 h-32 bg-blue-500/40 rounded-r-sm transform -rotate-6 hidden lg:block shadow-lg" />
-          <div className="absolute -left-2 top-1/3 w-2 h-24 bg-emerald-500/35 rounded-r-sm transform rotate-3 hidden lg:block shadow-lg" />
-          <div className="absolute -right-4 top-1/2 w-3 h-28 bg-blue-500/40 rounded-l-sm transform rotate-6 hidden lg:block shadow-lg" />
-          <div className="absolute -right-2 top-2/3 w-2 h-20 bg-blue-500/35 rounded-l-sm transform -rotate-3 hidden lg:block shadow-lg" />
-        </div>
-
-        <div className="container mx-auto px-4 sm:px-6 relative z-10">
-          <div className="max-w-4xl mx-auto text-center space-y-6 sm:space-y-8">
-            {/* Overline */}
-            <div
-              className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-              style={{ transitionDelay: '0ms' }}
-            >
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 text-xs font-medium tracking-widest uppercase text-foreground/80 bg-blue-500/10 border border-blue-500/30 dark:border-blue-400/30 rounded-full shadow-sm">
-                <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
-                Your personal library, online
-              </span>
-            </div>
-
-            {/* Main Heading */}
-            <div
-              className={`space-y-1 sm:space-y-2 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-              style={{ transitionDelay: '100ms' }}
-            >
-              <h1 className="text-[2.5rem] leading-tight sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl tracking-tight">
-                <span className="block font-bold">Your Bookshelf,</span>
-                <span className="block font-serif italic text-blue-500">
-                  Beautifully Online.
+              <h1
+                className={`transition-all duration-500 delay-75 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`}
+              >
+                <span className="block text-[2.75rem] sm:text-5xl lg:text-[3.5rem] font-bold tracking-[-0.02em] leading-[1.08]">
+                  Your bookshelf,
+                </span>
+                <span className="block text-[2.75rem] sm:text-5xl lg:text-[3.5rem] font-serif italic text-blue-600 dark:text-blue-400 tracking-[-0.01em] leading-[1.08]">
+                  beautifully online.
                 </span>
               </h1>
+
+              <p
+                className={`text-[17px] sm:text-lg text-muted-foreground max-w-[420px] leading-relaxed transition-all duration-500 delay-100 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`}
+              >
+                Track what you read, rate your favorites, and share your collection with a simple link.
+              </p>
+
+              <div
+                className={`flex flex-wrap items-center gap-4 pt-1 transition-all duration-500 delay-150 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`}
+              >
+                <Link href="/signup">
+                  <Button
+                    size="lg"
+                    className="group text-[15px] px-7 h-11 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white font-medium border-0 glow-accent-hover transition-all duration-200"
+                  >
+                    Create your bookfolio
+                    <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                  </Button>
+                </Link>
+              </div>
+
+              {/* Social proof hint */}
+              <div
+                className={`flex items-center gap-3 pt-4 transition-all duration-500 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`}
+              >
+                <div className="flex -space-x-2">
+                  {[
+                    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=face',
+                    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face',
+                    'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face',
+                    'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face',
+                  ].map((src, i) => (
+                    <img
+                      key={i}
+                      src={src}
+                      alt=""
+                      className="w-8 h-8 rounded-full border-2 border-background object-cover"
+                    />
+                  ))}
+                </div>
+                <span className="text-sm text-muted-foreground">
+                  Joined by readers everywhere
+                </span>
+              </div>
             </div>
 
-            {/* Subheading */}
-            <p
-              className={`text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-              style={{ transitionDelay: '200ms' }}
-            >
-              Track your reading journey and share your collection
-              with a beautiful, personalized page at{' '}
-              <span className="font-medium text-foreground break-all sm:break-normal">bookfolio.me/yourname</span>
-            </p>
-
-            {/* CTA Buttons */}
+            {/* Right: Phone preview - iPhone 16 Pro style */}
             <div
-              className={`flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-2 sm:pt-4 pb-8 sm:pb-12 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-              style={{ transitionDelay: '300ms' }}
+              className={`hidden lg:flex flex-col items-center transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
             >
-              <Link href="/signup" className="w-full sm:w-auto">
-                <Button
-                  size="lg"
-                  className="group relative text-sm sm:text-base px-6 sm:px-8 h-11 sm:h-12 rounded-full font-semibold bg-blue-500 hover:bg-blue-600 text-white shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 transition-all duration-300 w-full sm:w-auto border-0"
-                >
-                  Create Your Bookfolio
-                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </Link>
-              <button
-                onClick={scrollToPreview}
-                className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                See it in action
-                <ChevronDown className="w-4 h-4" />
-              </button>
+              <div className="relative scale-[0.85] origin-center">
+                {/* Phone frame - Titanium style */}
+                <div className="relative rounded-[3rem] p-[3px] bg-gradient-to-b from-neutral-700 via-neutral-800 to-neutral-900 shadow-2xl shadow-black/20 dark:shadow-black/50">
+                  {/* Inner bezel */}
+                  <div className="relative bg-black rounded-[2.8rem] p-[10px]">
+                    {/* Dynamic Island */}
+                    <div className="absolute top-[22px] left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
+                      <div className="w-[90px] h-[28px] bg-black rounded-full flex items-center justify-center">
+                        <div className="w-3 h-3 rounded-full bg-neutral-900 border border-neutral-800" />
+                      </div>
+                    </div>
+                    {/* Screen */}
+                    <div className="relative w-[272px] rounded-[2.2rem] overflow-hidden bg-background">
+                      <div className="h-[588px] overflow-y-auto overflow-x-hidden overscroll-contain scroll-smooth">
+                        <PreviewMobile />
+                      </div>
+                    </div>
+                  </div>
+                  {/* Side button - Power */}
+                  <div className="absolute right-[-2px] top-[120px] w-[3px] h-[60px] bg-gradient-to-b from-neutral-600 via-neutral-700 to-neutral-600 rounded-r-sm" />
+                  {/* Side buttons - Volume */}
+                  <div className="absolute left-[-2px] top-[100px] w-[3px] h-[28px] bg-gradient-to-b from-neutral-600 via-neutral-700 to-neutral-600 rounded-l-sm" />
+                  <div className="absolute left-[-2px] top-[140px] w-[3px] h-[50px] bg-gradient-to-b from-neutral-600 via-neutral-700 to-neutral-600 rounded-l-sm" />
+                </div>
+                {/* Subtle reflection */}
+                <div className="absolute inset-0 rounded-[3rem] bg-gradient-to-br from-white/5 via-transparent to-transparent pointer-events-none" />
+              </div>
+
+              {/* Interactive hint */}
+              <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground/50 -mt-6">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="absolute inline-flex h-full w-full rounded-full bg-current opacity-50 animate-ping"></span>
+                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-current"></span>
+                </span>
+                <span>Live preview · scroll to explore</span>
+              </div>
             </div>
           </div>
         </div>
-
       </section>
 
-      {/* How It Works Section */}
-      <section className="py-12 sm:py-20 md:py-28 border-t border-border/50 bg-gradient-to-b from-background via-blue-50/30 to-background dark:via-blue-950/20">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="max-w-5xl mx-auto">
-            {/* Section Header */}
-            <div className="text-center mb-10 sm:mb-16">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">
-                Three steps to your bookshelf
-              </h2>
-              <p className="text-muted-foreground max-w-xl mx-auto">
-                Get started in minutes. No credit card required.
+      {/* Features - Bento grid */}
+      <section className="py-16 sm:py-20 lg:py-28">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <div className="max-w-lg mb-12 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3">
+              Simple by design
+            </h2>
+            <p className="text-muted-foreground text-[15px] sm:text-base">
+              Everything you need to track your reading, nothing you don't.
+            </p>
+          </div>
+
+          {/* Bento grid */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+            {/* Wide card */}
+            <div className="sm:col-span-2 group p-6 sm:p-8 rounded-2xl bg-card border border-subtle hover:border-blue-500/20 transition-colors duration-200">
+              <div className="w-9 h-9 rounded-lg bg-blue-500/10 flex items-center justify-center mb-5">
+                <svg className="w-[18px] h-[18px] text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-semibold mb-2">Your personal library</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed max-w-md">
+                Search millions of titles. Organize by reading status. Add ratings and notes. Watch your collection grow over time.
               </p>
             </div>
 
-            {/* Steps */}
-            <div className="grid md:grid-cols-3 gap-6 sm:gap-8 md:gap-12">
-              {/* Step 1 */}
-              <div className="group">
-                <div className="flex flex-col items-center text-center md:items-start md:text-left">
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-br from-blue-500/10 to-blue-600/10 border border-blue-500/20 flex items-center justify-center mb-4 sm:mb-5 group-hover:scale-110 transition-transform duration-300">
-                    <BookOpen className="w-5 h-5 sm:w-6 sm:h-6 text-blue-500" />
-                  </div>
-                  <div className="text-[10px] sm:text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1.5 sm:mb-2">
-                    Step 1
-                  </div>
-                  <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3">
-                    Claim your URL
-                  </h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    Pick a username and get your own page at bookfolio.me/yourname
-                  </p>
-                </div>
+            {/* Card */}
+            <div className="group p-6 rounded-2xl bg-card border border-subtle hover:border-blue-500/20 transition-colors duration-200">
+              <div className="w-9 h-9 rounded-lg bg-sky-500/10 flex items-center justify-center mb-5">
+                <svg className="w-[18px] h-[18px] text-sky-600 dark:text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z" />
+                </svg>
               </div>
+              <h3 className="font-semibold mb-1.5">Share your shelf</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                Get a clean link at bookfolio.me/you
+              </p>
+            </div>
 
-              {/* Step 2 */}
-              <div className="group">
-                <div className="flex flex-col items-center text-center md:items-start md:text-left">
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-br from-emerald-500/10 to-emerald-600/10 border border-emerald-500/20 flex items-center justify-center mb-4 sm:mb-5 group-hover:scale-110 transition-transform duration-300">
-                    <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-500" />
-                  </div>
-                  <div className="text-[10px] sm:text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1.5 sm:mb-2">
-                    Step 2
-                  </div>
-                  <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3">
-                    Add your books
-                  </h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    Search our library of millions of titles. Add ratings, notes, and track your progress.
-                  </p>
-                </div>
+            {/* Card */}
+            <div className="group p-6 rounded-2xl bg-card border border-subtle hover:border-blue-500/20 transition-colors duration-200">
+              <div className="w-9 h-9 rounded-lg bg-amber-500/10 flex items-center justify-center mb-5">
+                <svg className="w-[18px] h-[18px] text-amber-600 dark:text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+                </svg>
               </div>
+              <h3 className="font-semibold mb-1.5">Rate & review</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                Stars and notes for every book
+              </p>
+            </div>
 
-              {/* Step 3 */}
-              <div className="group">
-                <div className="flex flex-col items-center text-center md:items-start md:text-left">
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center mb-4 sm:mb-5 group-hover:scale-110 transition-transform duration-300">
-                    <Share2 className="w-5 h-5 sm:w-6 sm:h-6 text-purple-500" />
-                  </div>
-                  <div className="text-[10px] sm:text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1.5 sm:mb-2">
-                    Step 3
-                  </div>
-                  <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3">
-                    Share your shelf
-                  </h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    Share your beautiful bookshelf with friends, on social media, or in your bio.
-                  </p>
-                </div>
+            {/* Card */}
+            <div className="group p-6 rounded-2xl bg-card border border-subtle hover:border-blue-500/20 transition-colors duration-200">
+              <div className="w-9 h-9 rounded-lg bg-violet-500/10 flex items-center justify-center mb-5">
+                <svg className="w-[18px] h-[18px] text-violet-600 dark:text-violet-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
+                </svg>
               </div>
+              <h3 className="font-semibold mb-1.5">Works offline</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                Install as an app on any device
+              </p>
+            </div>
+
+            {/* Card */}
+            <div className="group p-6 rounded-2xl bg-card border border-subtle hover:border-blue-500/20 transition-colors duration-200">
+              <div className="w-9 h-9 rounded-lg bg-rose-500/10 flex items-center justify-center mb-5">
+                <svg className="w-[18px] h-[18px] text-rose-600 dark:text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+                </svg>
+              </div>
+              <h3 className="font-semibold mb-1.5">Light & dark</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                Comfortable reading, any time
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-12 sm:py-20 md:py-28 bg-gradient-to-br from-blue-50/50 via-muted/30 to-blue-50/50 dark:from-blue-950/20 dark:via-muted/30 dark:to-blue-950/20 border-t border-border/50">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="max-w-5xl mx-auto">
-            <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
-              {/* Feature 1 */}
-              <div className="group p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl bg-card border border-border hover:border-border/80 hover:shadow-lg transition-all duration-300">
-                <div className="flex items-start gap-3 sm:gap-4">
-                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center shrink-0">
-                    <svg className="w-5 h-5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-base sm:text-lg mb-1 sm:mb-2">Rate & Review</h3>
-                    <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
-                      Add star ratings and personal notes to remember what you loved about each book.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Feature 2 */}
-              <div className="group p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl bg-card border border-border hover:border-border/80 hover:shadow-lg transition-all duration-300">
-                <div className="flex items-start gap-3 sm:gap-4">
-                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0">
-                    <svg className="w-5 h-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-base sm:text-lg mb-1 sm:mb-2">Organize Your Way</h3>
-                    <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
-                      Filter by status, sort by rating, and drag to reorder. Your shelf, your rules.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Feature 3 */}
-              <div className="group p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl bg-card border border-border hover:border-border/80 hover:shadow-lg transition-all duration-300">
-                <div className="flex items-start gap-3 sm:gap-4">
-                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0">
-                    <svg className="w-5 h-5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-base sm:text-lg mb-1 sm:mb-2">Works Offline</h3>
-                    <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
-                      Install as an app on your phone. Access your library anywhere, even without internet.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Feature 4 */}
-              <div className="group p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl bg-card border border-border hover:border-border/80 hover:shadow-lg transition-all duration-300">
-                <div className="flex items-start gap-3 sm:gap-4">
-                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center shrink-0">
-                    <svg className="w-5 h-5 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-base sm:text-lg mb-1 sm:mb-2">Dark & Light Modes</h3>
-                    <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
-                      Easy on the eyes, day or night. Your bookshelf looks great in any lighting.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Interactive Preview Section */}
-      <section id="preview-section" className="py-12 sm:py-20 md:py-28 border-t border-border/50 scroll-mt-16">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="text-center mb-6 sm:mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">
-              See it in action
-            </h2>
-            <p className="text-sm sm:text-base text-muted-foreground max-w-xl mx-auto">
-              Explore a sample bookshelf. This is what your public profile could look like.
-            </p>
+      {/* Mobile preview */}
+      <section className="lg:hidden py-12 sm:py-16 border-t border-subtle">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-8">
+            <h2 className="text-xl font-bold mb-2">See it in action</h2>
+            <p className="text-muted-foreground text-sm">Scroll to explore</p>
           </div>
 
-          {/* Phone mockup for all screen sizes */}
           <div className="flex justify-center">
             <div className="relative">
-              {/* Phone frame - larger on desktop */}
-              <div className="relative bg-gray-900 rounded-[2.5rem] sm:rounded-[3rem] p-2 sm:p-3 shadow-2xl">
-                {/* Phone notch / Dynamic Island */}
-                <div className="absolute top-2 sm:top-3 left-1/2 -translate-x-1/2 w-20 sm:w-28 h-5 sm:h-7 bg-black rounded-full z-20" />
-                {/* Phone screen */}
-                <div className="relative w-[280px] sm:w-[340px] md:w-[380px] rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden">
-                  {/* Scrollable content area with native mobile view */}
-                  <div className="h-[560px] sm:h-[680px] md:h-[760px] overflow-y-auto overflow-x-hidden overscroll-contain">
-                    <PreviewMobile />
+              {/* Phone frame - Titanium style */}
+              <div className="relative rounded-[2.5rem] sm:rounded-[3rem] p-[3px] bg-gradient-to-b from-neutral-700 via-neutral-800 to-neutral-900 shadow-2xl shadow-black/20">
+                {/* Inner bezel */}
+                <div className="relative bg-black rounded-[2.3rem] sm:rounded-[2.8rem] p-[8px] sm:p-[10px]">
+                  {/* Dynamic Island */}
+                  <div className="absolute top-[18px] sm:top-[22px] left-1/2 -translate-x-1/2 z-20">
+                    <div className="w-[75px] sm:w-[90px] h-[24px] sm:h-[28px] bg-black rounded-full flex items-center justify-center">
+                      <div className="w-2.5 sm:w-3 h-2.5 sm:h-3 rounded-full bg-neutral-900 border border-neutral-800" />
+                    </div>
+                  </div>
+                  {/* Screen */}
+                  <div className="relative w-[240px] sm:w-[272px] rounded-[1.8rem] sm:rounded-[2.2rem] overflow-hidden bg-background">
+                    <div className="h-[520px] sm:h-[588px] overflow-y-auto overflow-x-hidden overscroll-contain scroll-smooth">
+                      <PreviewMobile />
+                    </div>
                   </div>
                 </div>
-                {/* Home indicator */}
-                <div className="absolute bottom-1.5 sm:bottom-2 left-1/2 -translate-x-1/2 w-24 sm:w-32 h-1 sm:h-1.5 bg-gray-600 rounded-full" />
+                {/* Side buttons */}
+                <div className="absolute right-[-2px] top-[100px] sm:top-[120px] w-[3px] h-[50px] sm:h-[60px] bg-gradient-to-b from-neutral-600 via-neutral-700 to-neutral-600 rounded-r-sm" />
+                <div className="absolute left-[-2px] top-[85px] sm:top-[100px] w-[3px] h-[24px] sm:h-[28px] bg-gradient-to-b from-neutral-600 via-neutral-700 to-neutral-600 rounded-l-sm" />
+                <div className="absolute left-[-2px] top-[120px] sm:top-[140px] w-[3px] h-[42px] sm:h-[50px] bg-gradient-to-b from-neutral-600 via-neutral-700 to-neutral-600 rounded-l-sm" />
               </div>
-              {/* Scroll hint */}
-              <p className="text-center text-xs sm:text-sm text-muted-foreground mt-4 sm:mt-6 flex items-center justify-center gap-1.5">
-                <span className="inline-block w-4 h-4 border-2 border-muted-foreground/50 rounded-full animate-bounce" />
-                Scroll inside to explore
-              </p>
+              {/* Subtle reflection */}
+              <div className="absolute inset-0 rounded-[2.5rem] sm:rounded-[3rem] bg-gradient-to-br from-white/5 via-transparent to-transparent pointer-events-none" />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Final CTA Section */}
-      <section className="py-16 sm:py-24 md:py-32 border-t border-border/50 bg-gradient-to-b from-background via-blue-50/40 to-blue-50/40 dark:via-blue-950/20 dark:to-blue-950/20 relative overflow-hidden">
-        {/* Decorative gradient orbs */}
-        <div className="absolute top-0 left-1/4 w-64 h-64 bg-blue-500/20 dark:bg-blue-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-blue-500/20 dark:bg-blue-500/10 rounded-full blur-3xl" />
+      {/* CTA */}
+      <section className="py-16 sm:py-20 lg:py-28 border-t border-subtle relative overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-blue-500/[0.03] dark:bg-blue-500/[0.05] rounded-full blur-[100px] pointer-events-none" />
 
-        <div className="container mx-auto px-4 sm:px-6 text-center relative z-10">
-          <div className="max-w-2xl mx-auto space-y-6 sm:space-y-8">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold">
-              Ready to build your{' '}
-              <span className="text-blue-500">
-                bookshelf
-              </span>
-              ?
-            </h2>
-            <p className="text-base sm:text-lg text-muted-foreground">
-              Join readers who are tracking and sharing their literary journeys.
-            </p>
-            <Link href="/signup" className="inline-block w-full sm:w-auto">
-              <Button
-                size="lg"
-                className="group text-sm sm:text-base px-8 sm:px-10 h-12 sm:h-14 rounded-full font-semibold bg-blue-500 hover:bg-blue-600 text-white shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 transition-all duration-300 w-full sm:w-auto border-0"
-              >
-                Get Started — It&apos;s Free
-                <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </Link>
-          </div>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center relative z-10">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight mb-3 sm:mb-4">
+            Start your <span className="font-serif italic text-blue-600 dark:text-blue-400">bookshelf</span>
+          </h2>
+          <p className="text-muted-foreground text-sm sm:text-base lg:text-lg mb-6 sm:mb-8 max-w-md mx-auto">
+            Free forever. No ads. No catch.
+          </p>
+          <Link href="/signup">
+            <Button
+              size="lg"
+              className="group text-sm sm:text-[15px] px-6 sm:px-8 h-11 sm:h-12 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white font-medium border-0 glow-accent-hover transition-all duration-200"
+            >
+              Get started — it's free
+              <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+            </Button>
+          </Link>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-border py-8 sm:py-12">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="max-w-6xl mx-auto">
-            {/* Links */}
-            <div className="flex flex-wrap justify-center gap-4 sm:gap-6 mb-6 sm:mb-8 text-xs sm:text-sm">
-              <Link href="/about" className="text-muted-foreground hover:text-foreground transition-colors">
-                About
-              </Link>
-              <Link href="/feature-request" className="text-muted-foreground hover:text-foreground transition-colors">
-                Feature Request
-              </Link>
-              <Link href="/privacy" className="text-muted-foreground hover:text-foreground transition-colors">
-                Privacy Policy
-              </Link>
-              <Link href="/terms" className="text-muted-foreground hover:text-foreground transition-colors">
-                Terms of Use
-              </Link>
+      <footer className="border-t border-subtle py-6 sm:py-8">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <div className="flex flex-col items-center gap-4 sm:gap-5">
+            <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 sm:gap-5 text-xs sm:text-sm text-muted-foreground">
+              <Link href="/about" className="hover:text-foreground transition-colors">About</Link>
+              <Link href="/feature-request" className="hover:text-foreground transition-colors">Feature request</Link>
+              <Link href="/privacy" className="hover:text-foreground transition-colors">Privacy</Link>
+              <Link href="/terms" className="hover:text-foreground transition-colors">Terms</Link>
             </div>
 
-            {/* Social */}
-            <div className="flex justify-center mb-6">
-              <a
-                href="https://x.com/nikhilbhima"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-                aria-label="Follow on X (Twitter)"
-              >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                </svg>
-              </a>
-            </div>
+            <a
+              href="https://x.com/nikhilbhima"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+              aria-label="Follow on X"
+            >
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+              </svg>
+            </a>
 
-            {/* Copyright */}
-            <div className="text-center">
-              <div className="text-sm text-muted-foreground">
-                © {new Date().getFullYear()} Bookfolio. All rights reserved.
-              </div>
-            </div>
+            <span className="text-xs sm:text-sm text-muted-foreground">© {new Date().getFullYear()} Bookfolio</span>
           </div>
         </div>
       </footer>
