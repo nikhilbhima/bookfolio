@@ -60,10 +60,11 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/opengraph-image',
+        url: 'https://bookfolio.me/og-image.png',
         width: 1200,
         height: 630,
         alt: 'Bookfolio - Your Bookshelf, Beautifully Online',
+        type: 'image/png',
       },
     ],
   },
@@ -72,7 +73,7 @@ export const metadata: Metadata = {
     title: "Bookfolio - Track, Organize & Share Your Book Collection Online",
     description: "Track your reading journey, organize your book collection, and share your beautiful bookshelf with the world. A free, modern alternative to Goodreads.",
     creator: '@nikhilbhima',
-    images: ['/twitter-image'],
+    images: ['https://bookfolio.me/twitter-image.png'],
   },
   alternates: {
     canonical: 'https://bookfolio.me',

@@ -36,17 +36,33 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         url: `https://bookfolio.me/${profileData.username}`,
         siteName: "Bookfolio",
         type: "profile",
+        images: [
+          {
+            url: `https://bookfolio.me/${profileData.username}/opengraph-image`,
+            width: 1200,
+            height: 630,
+            alt: `${displayName}'s Bookshelf on Bookfolio`,
+          },
+        ],
       },
       twitter: {
-        card: "summary",
+        card: "summary_large_image",
         title: `${displayName}'s Bookshelf - Bookfolio`,
         description: bio.slice(0, 160),
+        images: [`https://bookfolio.me/${profileData.username}/opengraph-image`],
       },
     };
   } catch {
     return {
       title: "Bookshelf - Bookfolio",
       description: "Explore book collections on Bookfolio",
+      openGraph: {
+        images: [{ url: "https://bookfolio.me/og-image.png", width: 1200, height: 630 }],
+      },
+      twitter: {
+        card: "summary_large_image",
+        images: ["https://bookfolio.me/twitter-image.png"],
+      },
     };
   }
 }
